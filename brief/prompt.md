@@ -52,6 +52,11 @@ aksen merah lembut. Klausa yang menguji/menjatuhkan tesis memakai amber melalui 
 Jangan memberi merah pada semua bagian; merah hanya untuk miskonsepsi, risiko salah pakai, dan
 sinyal berhenti.
 
+Hindari desain yang terasa seperti komponen AI generik. Jangan mengandalkan card tebal, border
+keliling, shadow, badge berlebihan, atau panel warna penuh. Tampilan harus terasa seperti editorial
+memo dan knowledge ledger: garis tipis, label kecil, whitespace cukup, tabel bersih, dan warna
+sebagai anotasi kognitif yang tenang.
+
 ## POSTUR UTAMA
 1. Tiap edisi membawa SATU pertanyaan pengetahuan dan menjawabnya sampai tesis yang bisa diuji.
 2. Kejujuran tentang ketidakpastian adalah sinyal senioritas: bila belum tahu, katakan batasnya.
