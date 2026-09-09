@@ -16,7 +16,7 @@ const valid = `
 <section class="trigger"><div class="blk-k">Business Trigger</div><p>Tekanan keputusan pada BUMN dan AI membuat strategi perlu dibaca sebagai hipotesis.</p><div class="field"><span class="fk">Mengapa konsep ini dipilih</span><p>Konsep ini membantu membaca kapan target berubah menjadi pembelaan proyek.</p></div></section>
 <section class="knowledge-matrix"><div class="blk-k">Knowledge Matrix</div><table><tr><th>Layer</th><th>Isi</th></tr><tr><td>Konsep utama</td><td>Strategi sebagai hipotesis</td></tr></table></section>
 <section class="relationship"><div class="blk-k">Concept Relationship</div><p>Hipotesis menjelaskan asumsi, target menjadi pembanding, dan review cadence menjadi mekanisme praktik.</p></section>
-<section class="application-matrix"><div class="blk-k">Application Matrix</div><table><tr><th>Konteks</th><th>Pakai untuk</th></tr><tr><td>Rapat capex</td><td>Menulis bukti pembatal.</td></tr></table></section>
+<section class="application-matrix"><div class="blk-k">Application Matrix</div><table><tr><th>Konteks</th><th>Pakai untuk</th><th>Red flag</th></tr><tr><td>Rapat capex</td><td>Menulis bukti pembatal.</td><td>Proyek tetap jalan tanpa bukti baru.</td></tr></table></section>
 <section class="learn-next"><div class="blk-k">Learn Next</div><ul><li>Decision rights</li><li>Pre-mortem</li></ul></section>
 <section class="thesis">
   <p class="thesis-pos"><b>Thesis.</b> Strategi yang sehat ditulis sebagai hipotesis yang punya sinyal pembukti dan sinyal pembatal.</p>
@@ -24,10 +24,10 @@ const valid = `
   <div class="thesis-falsify"><span class="fk">Kapan tesis ini gugur</span><p>Tesis ini gugur bila perubahan indikator tidak mengubah keputusan modal.</p></div>
 </section>
 <section class="diagnostic">
-  <div class="field"><span class="fk">Salah kaprah</span><p>Strategi sering disamakan dengan target.</p></div>
+  <div class="field danger"><span class="fk">Salah kaprah</span><p>Strategi sering disamakan dengan target.</p></div>
   <div class="field"><span class="fk">Gap lapangan</span><p>Rapat menyetujui proyek tanpa menyebut sinyal pembatal.</p></div>
   <div class="field"><span class="fk">Pertanyaan diagnosis</span><p>Bukti apa yang membuat keputusan diubah?</p></div>
-  <div class="field"><span class="fk">Jangan pakai konsep ini jika</span><p>Keputusan kecil dan murah lebih baik diuji cepat.</p></div>
+  <div class="field danger"><span class="fk">Jangan pakai konsep ini jika</span><p>Keputusan kecil dan murah lebih baik diuji cepat.</p></div>
 </section>
 </body></html>`;
 
@@ -69,6 +69,14 @@ test('audit rejects missing trigger rationale', () => {
 
 test('audit rejects missing knowledge matrix', () => {
   assert.throws(() => auditKnowledgeBrief(valid.replace('Knowledge Matrix', 'Knowledge Notes')), /knowledge matrix/);
+});
+
+test('audit rejects negative guidance without semantic danger styling', () => {
+  assert.throws(() => auditKnowledgeBrief(valid.replace('field danger"><span class="fk">Salah kaprah', 'field"><span class="fk">Salah kaprah')), /danger styling/);
+});
+
+test('audit rejects boundary guidance without semantic danger styling', () => {
+  assert.throws(() => auditKnowledgeBrief(valid.replace('field danger"><span class="fk">Jangan pakai konsep ini jika', 'field"><span class="fk">Jangan pakai konsep ini jika')), /danger styling/);
 });
 
 test('published editions pass production audit', () => {

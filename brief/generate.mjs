@@ -167,7 +167,7 @@ async function callDeepSeek(promptText, topic){
     '',
     promptText,
     '',
-    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, bahasa utopis, nomor ganda item-num, tesis tanpa keberatan terbaik, tesis tanpa klausa falsifikasi, edisi tanpa Business Trigger, Mengapa konsep ini dipilih, Knowledge Matrix, Concept Relationship, Application Matrix, Learn Next, Salah kaprah, Gap lapangan, Pertanyaan diagnosis, dan Jangan pakai konsep ini jika.',
+    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, bahasa utopis, nomor ganda item-num, tesis tanpa keberatan terbaik, tesis tanpa klausa falsifikasi, edisi tanpa Business Trigger, Mengapa konsep ini dipilih, Knowledge Matrix, Concept Relationship, Application Matrix, Learn Next, Salah kaprah, Gap lapangan, Pertanyaan diagnosis, Jangan pakai konsep ini jika, kolom Red flag, atau class field danger pada blok negatif.',
     '',
     'Tulis HTML lengkap sekarang. Kembalikan HANYA HTML (tanpa fence markdown, tanpa komentar).'
   ].join('\n');
@@ -257,7 +257,7 @@ function skeleton(full){
     '<section class="application-matrix"><div class="blk-k">Application Matrix</div><div class="table-wrap"><table><thead><tr><th>Konteks</th><th>Dipakai untuk</th><th>Red flag</th></tr></thead><tbody><tr><td>Rapat</td><td>...</td><td>...</td></tr></tbody></table></div></section>',
     '<div class="question"><div class="blk-k">Pertanyaan hari ini</div><p>Bagaimana <b></b> berubah ketika konteks keputusan berubah cepat?</p></div>',
     '<section class="thesis"><div class="blk-k">Tesis hari ini</div><div class="thesis-pos"><b>Thesis.</b> &lt;posisi satu-dua kalimat, tegas, bisa diuji.&gt;</div><div class="thesis-support"><div class="field"><span class="fk">Penopang</span><p><span class="ev-fact">FACT</span> satu fakta/jejak · <span class="ev-inf">INFERENCE</span> satu kesimpulan.</p></div></div><div class="thesis-objection"><span class="fk">Keberatan terbaik</span><p>&lt;counter terkuat, ditulis adil.&gt;</p></div><div class="thesis-falsify"><span class="fk">Kapan tesis ini gugur</span><p>&lt;klausa falsifikasi eksplisit.&gt;</p></div></section>',
-    '<section class="diagnostic"><div class="field"><span class="fk">Salah kaprah</span><p>&lt;satu salah kaprah yang sering terjadi.&gt;</p></div><div class="field"><span class="fk">Gap lapangan</span><p>&lt;satu gap praktik di rapat, memo, governance, atau eksekusi.&gt;</p></div><div class="field"><span class="fk">Pertanyaan diagnosis</span><p>&lt;satu pertanyaan untuk menguji situasi nyata.&gt;</p></div><div class="field"><span class="fk">Jangan pakai konsep ini jika</span><p>&lt;batas kondisi ketika konsep ini salah konteks.&gt;</p></div></section>'
+    '<section class="diagnostic"><div class="field danger"><span class="fk">Salah kaprah</span><p>&lt;satu salah kaprah yang sering terjadi.&gt;</p></div><div class="field"><span class="fk">Gap lapangan</span><p>&lt;satu gap praktik di rapat, memo, governance, atau eksekusi.&gt;</p></div><div class="field"><span class="fk">Pertanyaan diagnosis</span><p>&lt;satu pertanyaan untuk menguji situasi nyata.&gt;</p></div><div class="field danger"><span class="fk">Jangan pakai konsep ini jika</span><p>&lt;batas kondisi ketika konsep ini salah konteks.&gt;</p></div></section>'
   ];
   if(!full) return base.join('\n');
   const parts = [].concat(base);

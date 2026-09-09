@@ -46,6 +46,12 @@ Application Matrix, Learn Next, satu salah kaprah, satu batas berlaku, satu cata
 Narasi hanya berfungsi menjelaskan hubungan antarblok. Jangan membuat pembaca bekerja mencari
 "daging" di tengah paragraf panjang.
 
+Gunakan warna sebagai kode kognitif, bukan dekorasi. Konten negatif atau batas pakai harus
+terlihat berbeda: "Salah kaprah", "Jangan pakai konsep ini jika", dan kolom "Red flag" memakai
+aksen merah lembut. Klausa yang menguji/menjatuhkan tesis memakai amber melalui thesis-falsify.
+Jangan memberi merah pada semua bagian; merah hanya untuk miskonsepsi, risiko salah pakai, dan
+sinyal berhenti.
+
 ## POSTUR UTAMA
 1. Tiap edisi membawa SATU pertanyaan pengetahuan dan menjawabnya sampai tesis yang bisa diuji.
 2. Kejujuran tentang ketidakpastian adalah sinyal senioritas: bila belum tahu, katakan batasnya.
@@ -130,10 +136,10 @@ Wajib ada. Buat tabel penggunaan:
 ### 10. BLOK DIAGNOSIS PRAKTIK
 Wajib ada setelah tesis, sebelum blok pengetahuan:
 <section class="diagnostic">
-  <div class="field"><span class="fk">Salah kaprah</span><p>Kesalahan umum yang membuat konsep dipakai dangkal.</p></div>
+  <div class="field danger"><span class="fk">Salah kaprah</span><p>Kesalahan umum yang membuat konsep dipakai dangkal.</p></div>
   <div class="field"><span class="fk">Gap lapangan</span><p>Kesenjangan yang biasa muncul di rapat, memo, governance, insentif, atau eksekusi.</p></div>
   <div class="field"><span class="fk">Pertanyaan diagnosis</span><p>Satu pertanyaan yang bisa langsung dipakai pembaca untuk menguji situasi nyata.</p></div>
-  <div class="field"><span class="fk">Jangan pakai konsep ini jika</span><p>Batas kondisi ketika konsep hari ini terlalu berat, terlalu lambat, atau salah konteks.</p></div>
+  <div class="field danger"><span class="fk">Jangan pakai konsep ini jika</span><p>Batas kondisi ketika konsep hari ini terlalu berat, terlalu lambat, atau salah konteks.</p></div>
 </section>
 
 ### 11. BLOK PENGETAHUAN (Lapis B, sumber kedalaman)
@@ -208,7 +214,7 @@ Gunakan struktur & class berikut PERSIS:
 - Question: <div class="question"><div class="blk-k">Pertanyaan hari ini</div><p>...</p></div>
 - Thesis: <section class="thesis"><div class="blk-k">Tesis hari ini</div> ... </section>
 - Thesis support/objection/falsify: class thesis-pos / thesis-objection / thesis-falsify (lihat di atas).
-- Diagnostic: <section class="diagnostic"> dengan label Salah kaprah, Gap lapangan, Pertanyaan diagnosis, dan Jangan pakai konsep ini jika.
+- Diagnostic: <section class="diagnostic"> dengan label Salah kaprah, Gap lapangan, Pertanyaan diagnosis, dan Jangan pakai konsep ini jika. Label Salah kaprah dan Jangan pakai konsep ini jika WAJIB memakai <div class="field danger">.
 - Section header: <h2 class="sec-kicker">Nama Seksi<span class="spacer"></span></h2>
 - Item/lensa: <article class="item"><div class="item-head"><h3>...</h3></div> ... </article>. Jangan memakai class item-num karena nomor sudah ada di h2.
 - Meta field: <div class="field"><span class="fk">Label</span><p>...</p></div>

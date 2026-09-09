@@ -40,6 +40,13 @@ export function auditKnowledgeBrief(html, options = {}) {
   if (!/Application Matrix/i.test(text)) failures.push('missing application matrix');
   if (!/Learn Next/i.test(text)) failures.push('missing learn next block');
   if (/<span\s+class=["']item-num["']/i.test(html)) failures.push('duplicate visible numbering');
+  if (!/<div\s+class=["'][^"']*\bfield\b[^"']*\bdanger\b[^"']*["'][^>]*>\s*<span\s+class=["']fk["']>\s*Salah kaprah/i.test(html)) {
+    failures.push('missing danger styling for misconception block');
+  }
+  if (!/<div\s+class=["'][^"']*\bfield\b[^"']*\bdanger\b[^"']*["'][^>]*>\s*<span\s+class=["']fk["']>\s*(?:Jangan pakai konsep ini jika|Kapan konsep ini tidak berlaku)/i.test(html)) {
+    failures.push('missing danger styling for boundary-of-use block');
+  }
+  if (!/Red flag/i.test(text)) failures.push('missing red flag column');
 
   const productionBanned = [
     { name: 'dry-run marker', pattern: /\b(?:DRAF|DRY-RUN|dry-run|Kerangka dry-run)\b/i },
