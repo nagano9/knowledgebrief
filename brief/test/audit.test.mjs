@@ -13,6 +13,7 @@ const valid = `
 <!doctype html><html lang="id"><head><meta name="teaser" content="Strategi perlu diuji seperti hipotesis."></head><body>
 <p class="dek">Edisi ini menambat strategi pada bukti, bukan keyakinan awal.</p>
 <div class="seconds"><div class="blk-k">60 detik</div><ul><li>Satu konsep utama mengikat keputusan.</li><li>Satu konsep pembanding mencegah salah pakai.</li><li>Satu konsep praktik menurunkannya ke rapat.</li></ul><p class="act"><b>Ide untuk dibawa ke rapat:</b> tulis bukti pembatal sebelum anggaran dikunci.</p></div>
+<section class="trigger"><div class="blk-k">Dipicu oleh</div><p>DailyBrief menampilkan tekanan keputusan pada BUMN dan AI. LeaderBrief memberi konteks leadership tentang sponsor keputusan.</p><div class="field"><span class="fk">Mengapa konsep ini dipilih</span><p>Konsep ini membantu membaca kapan target berubah menjadi pembelaan proyek.</p></div></section>
 <section class="thesis">
   <p class="thesis-pos"><b>Thesis.</b> Strategi yang sehat ditulis sebagai hipotesis yang punya sinyal pembukti dan sinyal pembatal.</p>
   <div class="thesis-objection"><span class="fk">Keberatan terbaik</span><p>Organisasi juga membutuhkan komitmen, bukan eksperimen tanpa batas.</p></div>
@@ -52,6 +53,14 @@ test('audit rejects brief without field gap discipline', () => {
 
 test('audit rejects utopian language', () => {
   assert.throws(() => auditKnowledgeBrief(valid.replace('bukti, bukan keyakinan awal', 'game changer bagi semua organisasi')), /utopian/);
+});
+
+test('audit rejects duplicate visible numbering', () => {
+  assert.throws(() => auditKnowledgeBrief(valid.replace('</body>', '<span class="item-num">1</span></body>')), /duplicate visible numbering/);
+});
+
+test('audit rejects missing trigger rationale', () => {
+  assert.throws(() => auditKnowledgeBrief(valid.replace('Mengapa konsep ini dipilih', 'Catatan konsep')), /concept selection/);
 });
 
 test('published editions pass production audit', () => {

@@ -33,6 +33,9 @@ export function auditKnowledgeBrief(html, options = {}) {
   if (!/Gap lapangan/i.test(text)) failures.push('missing field gap block');
   if (!/Pertanyaan diagnosis/i.test(text)) failures.push('missing diagnostic question');
   if (!/(?:Jangan pakai konsep ini jika|Kapan konsep ini tidak berlaku)/i.test(text)) failures.push('missing boundary-of-use block');
+  if (!/Dipicu oleh/i.test(text)) failures.push('missing trigger block');
+  if (!/Mengapa konsep ini dipilih/i.test(text)) failures.push('missing concept selection rationale');
+  if (/<span\s+class=["']item-num["']/i.test(html)) failures.push('duplicate visible numbering');
 
   const productionBanned = [
     { name: 'dry-run marker', pattern: /\b(?:DRAF|DRY-RUN|dry-run|Kerangka dry-run)\b/i },

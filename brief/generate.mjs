@@ -99,6 +99,32 @@ async function contextFor(topic){
   return sel.map(function(r,i){ return (i+1)+'. '+r.title+'\n   '+r.link+'\n   '+r.snippet; }).join('\n\n');
 }
 
+function stripPublicHtml(s){
+  return stripHtml(String(s || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' '));
+}
+
+async function fetchPublicSignal(name, url){
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(25000) });
+    if (!res.ok) return name + ': tidak tersedia saat generate.';
+    const text = stripPublicHtml(await res.text()).slice(0, 2200);
+    return name + ' (' + url + '):\n' + text;
+  } catch (e) {
+    return name + ': tidak tersedia saat generate.';
+  }
+}
+
+async function groundingContext(){
+  if (DRY) return '';
+  const signals = await Promise.all([
+    fetchPublicSignal('DailyBrief.id', 'https://dailybrief.id/'),
+    fetchPublicSignal('LeaderBrief.id', 'https://leaderbrief.id/')
+  ]);
+  return signals.join('\n\n');
+}
+
 // ---------- call LLM ----------
 async function callDeepSeek(promptText, topic){
   const ledger = json(LEDGER_FILE, { concepts: [] });
@@ -120,7 +146,7 @@ async function callDeepSeek(promptText, topic){
     '',
     promptText,
     '',
-    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, bahasa utopis, tesis tanpa keberatan terbaik, tesis tanpa klausa falsifikasi, atau edisi tanpa Salah kaprah, Gap lapangan, Pertanyaan diagnosis, dan Jangan pakai konsep ini jika.',
+    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, bahasa utopis, nomor ganda item-num, tesis tanpa keberatan terbaik, tesis tanpa klausa falsifikasi, edisi tanpa Dipicu oleh, edisi tanpa Mengapa konsep ini dipilih, atau edisi tanpa Salah kaprah, Gap lapangan, Pertanyaan diagnosis, dan Jangan pakai konsep ini jika.',
     '',
     'Tulis HTML lengkap sekarang. Kembalikan HANYA HTML (tanpa fence markdown, tanpa komentar).'
   ].join('\n');
@@ -186,6 +212,7 @@ function injectTemplate(html){
 }
 function addChrome(html){
   const secTitles=[];
+  html = html.replace(/<span\s+class=["']item-num["'][^>]*>[\s\S]*?<\/span>/gi, '');
   html = html.replace(/<h2 class="sec-kicker">([^<]*)<span class="spacer"><\/span><\/h2>/g, function(m,t){ secTitles.push(t); return '<h2 class="sec-kicker" id="sec-' + secTitles.length + '">' + t + '<span class="spacer"></span></h2>'; });
   const links = secTitles.map(function(t,i){ return '<a href="#sec-' + (i+1) + '">' + escapeHtml(t) + '</a>'; }).join('');
   const toc = '<aside class="toc"><div class="k">On this page</div>' + links + '</aside>';
@@ -203,13 +230,14 @@ function skeleton(full){
     '<div class="lensa">Lensa Knowledge Brief - Penerapan</div>',
     '<p class="dek">Kerangka dry-run untuk menguji struktur & desain CSS. Nama topik ditampilkan agar kontrak HTML mudah disentuh.</p>',
     '<div class="seconds"><div class="blk-k">60 detik</div><ul><li>Bullet 1: inti yang bisa diucapkan dalam satu tarikan napas.</li><li>Bullet 2: satu pergeseran agar tidak terasa seperti ringkasan wiki.</li><li>Bullet 3: satu hal yang menuntut keputusan atau dalil.</li></ul><p class="act"><b>Ide untuk dibawa ke rapat:</b> &lt;isi satu ide tajam di sini&gt;</p></div>',
+    '<section class="trigger"><div class="blk-k">Dipicu oleh</div><p>DailyBrief atau LeaderBrief memberi sinyal yang membuat konsep hari ini relevan.</p><div class="field"><span class="fk">Mengapa konsep ini dipilih</span><p>Konsep ini dipilih karena menjelaskan gap keputusan yang muncul dari sinyal tersebut.</p></div></section>',
     '<div class="question"><div class="blk-k">Pertanyaan hari ini</div><p>Bagaimana <b></b> berubah ketika konteks keputusan berubah cepat?</p></div>',
     '<section class="thesis"><div class="blk-k">Tesis hari ini</div><div class="thesis-pos"><b>Thesis.</b> &lt;posisi satu-dua kalimat, tegas, bisa diuji.&gt;</div><div class="thesis-support"><div class="field"><span class="fk">Penopang</span><p><span class="ev-fact">FACT</span> satu fakta/jejak · <span class="ev-inf">INFERENCE</span> satu kesimpulan.</p></div></div><div class="thesis-objection"><span class="fk">Keberatan terbaik</span><p>&lt;counter terkuat, ditulis adil.&gt;</p></div><div class="thesis-falsify"><span class="fk">Kapan tesis ini gugur</span><p>&lt;klausa falsifikasi eksplisit.&gt;</p></div></section>',
     '<section class="diagnostic"><div class="field"><span class="fk">Salah kaprah</span><p>&lt;satu salah kaprah yang sering terjadi.&gt;</p></div><div class="field"><span class="fk">Gap lapangan</span><p>&lt;satu gap praktik di rapat, memo, governance, atau eksekusi.&gt;</p></div><div class="field"><span class="fk">Pertanyaan diagnosis</span><p>&lt;satu pertanyaan untuk menguji situasi nyata.&gt;</p></div><div class="field"><span class="fk">Jangan pakai konsep ini jika</span><p>&lt;batas kondisi ketika konsep ini salah konteks.&gt;</p></div></section>'
   ];
   if(!full) return base.join('\n');
   const parts = [].concat(base);
-  const sec = function(n,title,kick){ return '<h2 class="sec-kicker">'+n+' · '+title+'<span class="spacer"></span></h2>' + '</span></h2><article class="item"><div class="item-head"><span class="item-num">'+n+'</span><h3>'+title+'</h3></div><div class="meta"><span class="chip">'+escapeHtml(kick)+'</span></div><p class="field" style="border:0"></p></article>'; };
+  const sec = function(n,title,kick){ return '<h2 class="sec-kicker">'+n+' · '+title+'<span class="spacer"></span></h2>' + '<article class="item"><div class="item-head"><h3>'+title+'</h3></div><div class="meta"><span class="chip">'+escapeHtml(kick)+'</span></div><p class="field" style="border:0"></p></article>'; };
   // Actually produce readable placeholder lenses
   const lenses = [
     ['Konsep','Definisi kanonik, pencetus, sumber, dan batas konsep.'],
@@ -347,7 +375,11 @@ async function main(){
     if(!DEEPSEEK){ console.error('DEEPSEEK_API_KEY belum diset. Gunakan --dry-run atau set env.'); process.exit(1); }
     const promptText = readFileSync(PROMPT_FILE, 'utf8');
     const context = await contextFor(topic); // optional
-    let html = await callDeepSeek(promptText + (context?('\n\n=== MATERI KONTEKSTUAL (boleh verifikasi) ===\n'+context):''), topic);
+    const grounding = await groundingContext();
+    const enrichedPrompt = promptText
+      + (grounding ? '\n\n=== SINYAL GROUNDING DARI EKOSISTEM BRIEF ===\n' + grounding : '')
+      + (context ? '\n\n=== MATERI KONTEKSTUAL (boleh verifikasi) ===\n' + context : '');
+    let html = await callDeepSeek(enrichedPrompt, topic);
     finalHtml = injectTemplate( addChrome(html) );
     updateLedger(topic, extractMeta(finalHtml));
   }

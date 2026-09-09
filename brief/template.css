@@ -67,6 +67,8 @@ h4{font-family:var(--serif);font-size:19px;font-weight:600;margin:22px 0 7px;lin
 .thesis-objection .fk,.thesis-falsify .fk{color:var(--accent2)}
 .item{margin:0 0 30px}
 .item:first-of-type{padding-top:4px}
+.item-head{display:block}
+.item-num{display:none}
 
 .field{margin:0 0 14px}
 .fk{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
@@ -76,6 +78,11 @@ h4{font-family:var(--serif);font-size:19px;font-weight:600;margin:22px 0 7px;lin
 .diagnostic .field{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;margin-bottom:0}
 .diagnostic .field:first-child{border-top:0;padding-top:0;margin-top:0}
 .diagnostic .fk{color:var(--accent2)}
+
+.trigger{border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line);padding:16px 0;margin:0 0 26px}
+.trigger p{margin:0 0 10px;color:var(--fg)}
+.trigger .field{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.trigger a{color:var(--accent);text-decoration:none}
 
 .ev-fact{color:var(--accent2);font-weight:700}
 .ev-inf{color:var(--muted);font-style:italic}
