@@ -11,7 +11,7 @@
   JANGAN link font. Desain di-inject runner.
 - Sertakan 3 elemen metadata WAJIB (dipakai halaman arsip & homepage):
   - Di dalam <head>: <meta name="teaser" content="SATU KALIMAT yang membuat orang bertanya lebih jauh">
-  - Sebelum thesis: <div class="lensa">Lensa Knowledge Brief — {Konsep|Aturan|Penerapan|Geseran|Sintesis}</div>
+  - Sebelum thesis: <div class="lensa">Lensa Knowledge Brief - {Konsep|Aturan|Penerapan|Geseran|Sintesis}</div>
   - <p class="dek">SATU KALIMAT pembeda edisi ini dari edisi kemarin (hubungan ke ledger).</p>
 - Kembalikan HANYA HTML, tanpa fence markdown, tanpa komentar.
 
@@ -109,7 +109,7 @@ komparatif. Beri jejak pada klaim teoretis bila ada (pencetus/tahun).
 ## HTML CONTRACT (wajib, desain di-inject runner)
 Gunakan struktur & class berikut PERSIS:
 - Masthead: <header class="masthead"><div class="masthead-name">Knowledge Brief</div><div class="masthead-date">[Hari, DD MMMM YYYY]</div></header>
-- Lensa: <div class="lensa">Lensa Knowledge Brief — [lensa]</div>
+- Lensa: <div class="lensa">Lensa Knowledge Brief - [lensa]</div>
 - Dek: <p class="dek">[satu kalimat]</p>
 - 60 detik: <div class="seconds"><div class="blk-k">60 detik</div><ul><li>...</li></ul><p class="act"><b>Ide untuk dibawa ke rapat:</b> ...</p></div>
 - Question: <div class="question"><div class="blk-k">Pertanyaan hari ini</div><p>...</p></div>

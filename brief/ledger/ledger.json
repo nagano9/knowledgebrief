@@ -1,6 +1,22 @@
 {
   "version": 1,
-  "concepts": [],
-  "theses": []
+  "concepts": [
+    {
+      "uid": "seed-2026-09-09-strategy-hypothesis",
+      "date": "2026-09-09",
+      "slug": "strategy-hypothesis",
+      "title": "Strategi sebagai hipotesis",
+      "pillar": "Strategy",
+      "lens": "Lensa Knowledge Brief - Penerapan",
+      "dek": "Edisi pembuka menempatkan strategi sebagai hipotesis yang harus diuji, bukan sebagai slogan yang dipertahankan setelah bukti berubah."
+    }
+  ],
+  "theses": [
+    {
+      "date": "2026-09-09",
+      "slug": "strategy-hypothesis",
+      "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
+    }
+  ],
+  "updated": "2026-09-09"
 }
-

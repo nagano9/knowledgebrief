@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "brief": "node generate.mjs",
-    "dry-run": "node generate.mjs --dry-run"
+    "dry-run": "node generate.mjs --dry-run",
+    "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
     "rss-parser": "^3.13.0"

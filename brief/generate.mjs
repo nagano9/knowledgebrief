@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { auditKnowledgeBrief } from './audit.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ENGINE = __dirname;
@@ -24,6 +25,7 @@ const PROMPT_FILE = join(ENGINE, 'prompt.md');
 const CSS_FILE = join(ENGINE, 'template.css');
 const ARCHIVE_FILE = join(LEDGER_DIR, 'archive.jsonl');
 const LEDGER_FILE = join(LEDGER_DIR, 'ledger.json');
+const SITE_URL = 'https://knowledgebrief.id';
 
 const DEEPSEEK = process.env.DEEPSEEK_API_KEY || '';
 const MODEL = process.env.BRIEF_MODEL || 'deepseek-chat';
@@ -57,6 +59,7 @@ function json(path, fallback){ if(!existsSync(path)) return fallback; try{ retur
 function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function isWorkingDay(w){ return w!=='Sabtu' && w!=='Minggu'; }
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function absUrl(pathname){ return SITE_URL + pathname; }
 
 // ---------- topik round-robin per bucket ----------
 function pickTopic(cfg, state, wd){
@@ -112,10 +115,12 @@ async function callDeepSeek(promptText, topic){
     'Model/Framework: ' + (topic.model || ''),
     'Konsep inti: ' + (topic.coreConcept || ''),
     '',
-    '=== MEMORI (LEDGER) — konsep yang sudah dijelaskan edisi lalu (JANGAN jelaskan ulang penuh; rujuk dan fokus penerapan/geseran baru) ===',
+    '=== MEMORI (LEDGER) - konsep yang sudah dijelaskan edisi lalu (JANGAN jelaskan ulang penuh; rujuk dan fokus penerapan/geseran baru) ===',
     recent,
     '',
     promptText,
+    '',
+    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, atau tesis tanpa keberatan terbaik dan klausa falsifikasi.',
     '',
     'Tulis HTML lengkap sekarang. Kembalikan HANYA HTML (tanpa fence markdown, tanpa komentar).'
   ].join('\n');
@@ -157,9 +162,27 @@ function updateLedger(topic, meta){
 function injectTemplate(html){
   const css = readFileSync(CSS_FILE, 'utf8');
   const styleTag = '<style>\n' + css + '\n</style>';
+  const meta = extractMeta(html);
+  const title = escapeHtml((meta.lens || meta.dek || 'Knowledge Brief').slice(0, 80) + ' | KnowledgeBrief.id');
+  const description = escapeHtml((meta.dek || meta.teaser || 'Kurasi pengetahuan harian untuk manajer eksekutif dan Subject Matter Expert.').slice(0, 160));
+  const seo = [
+    '<title>' + title + '</title>',
+    '<meta name="description" content="' + description + '">',
+    '<link rel="canonical" href="' + absUrl('/briefs/' + dateStr + '.html') + '">',
+    '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
+    '<link rel="manifest" href="/site.webmanifest">',
+    '<meta name="theme-color" content="#1652a0">',
+    '<meta property="og:type" content="article">',
+    '<meta property="og:title" content="' + title + '">',
+    '<meta property="og:description" content="' + description + '">',
+    '<meta property="og:url" content="' + absUrl('/briefs/' + dateStr + '.html') + '">'
+  ].join('\n');
   html = html.replace(/<style[\s\S]*?<\/style>/gi, '');
-  if (/<\/head>/i.test(html)) return html.replace(/<\/head>/i, styleTag + '\n</head>');
-  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>' + escapeHtml('Knowledge Brief · ' + pretty) + '</title>' + styleTag + '</head><body>' + html + '</body></html>';
+  html = html.replace(/<title>[\s\S]*?<\/title>/gi, '');
+  html = html.replace(/<meta\s+name=["']description["'][^>]*>/gi, '');
+  html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/gi, '');
+  if (/<\/head>/i.test(html)) return html.replace(/<\/head>/i, seo + '\n' + styleTag + '\n</head>');
+  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' + seo + styleTag + '</head><body>' + html + '</body></html>';
 }
 function addChrome(html){
   const secTitles=[];
@@ -177,7 +200,7 @@ function addChrome(html){
 function skeleton(full){
   const base = [
     '<header class="masthead"><div class="masthead-name">Knowledge Brief</div><div class="masthead-sub">Konstruksi pengetahuan lintas hari · diakumulasi</div><div class="masthead-date">' + pretty + '</div></header>',
-    '<div class="lensa">Lensa Knowledge Brief — Penerapan</div>',
+    '<div class="lensa">Lensa Knowledge Brief - Penerapan</div>',
     '<p class="dek">Kerangka dry-run untuk menguji struktur & desain CSS. Nama topik ditampilkan agar kontrak HTML mudah disentuh.</p>',
     '<div class="seconds"><div class="blk-k">60 detik</div><ul><li>Bullet 1: inti yang bisa diucapkan dalam satu tarikan napas.</li><li>Bullet 2: satu pergeseran agar tidak terasa seperti ringkasan wiki.</li><li>Bullet 3: satu hal yang menuntut keputusan atau dalil.</li></ul><p class="act"><b>Ide untuk dibawa ke rapat:</b> &lt;isi satu ide tajam di sini&gt;</p></div>',
     '<div class="question"><div class="blk-k">Pertanyaan hari ini</div><p>Bagaimana <b></b> berubah ketika konteks keputusan berubah cepat?</p></div>',
@@ -202,15 +225,38 @@ function skeleton(full){
 
 function renderDryHtml(topic){
   const body = skeleton(true);
-  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="teaser" content="DRAF DRY-RUN — ' + escapeHtml(topic.title) + '"><title>' + escapeHtml('Knowledge Brief · ' + pretty) + '</title></head><body><div class="wrap">' + body + '<footer class="foot"><p><b>DRAF KERANGKA (dry-run).</b> Belum ditinjau editor/apapun; dipakai utk uji struktur & CSS. Nama topik: <b>' + escapeHtml(topic.title) + '</b> · pilar ' + escapeHtml(topic.pillar||'') + '.</p></footer></div></body></html>';
+  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="teaser" content="DRAF DRY-RUN - ' + escapeHtml(topic.title) + '"><title>' + escapeHtml('Knowledge Brief · ' + pretty) + '</title></head><body><div class="wrap">' + body + '<footer class="foot"><p><b>DRAF KERANGKA (dry-run).</b> Belum ditinjau editor/apapun; dipakai utk uji struktur & CSS. Nama topik: <b>' + escapeHtml(topic.title) + '</b> · pilar ' + escapeHtml(topic.pillar||'') + '.</p></footer></div></body></html>';
 }
 
 // ---------- manifest & arsip ----------
 function updateManifest(d, meta, file){
   const p = join(BRIEFS,'manifest.json'); let m = json(p, {});
-  const title = pretty + (meta.lens ? ' — ' + meta.lens : '');
+  const title = pretty + (meta.lens ? ' - ' + meta.lens : '');
   m[d] = { date:d, title:title, dek:meta.dek, teaser:meta.teaser, headline:meta.lens||meta.dek, file:file };
   writeFileSync(p, JSON.stringify(m, null, 2) + '\n', 'utf8');
+}
+
+function writeSeoFiles(){
+  const m = json(join(BRIEFS,'manifest.json'), {});
+  const dates = Object.keys(m).sort().reverse();
+  const latest = dates[0] || dateStr;
+  const urls = [
+    { loc: absUrl('/'), lastmod: latest },
+    { loc: absUrl('/briefs/'), lastmod: latest }
+  ];
+  for (const d of dates) {
+    const e = m[d] || {};
+    if (e.file) urls.push({ loc: absUrl('/briefs/' + e.file), lastmod: d });
+  }
+  const sitemap = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    urls.map(function(u){ return '  <url><loc>' + escapeHtml(u.loc) + '</loc><lastmod>' + escapeHtml(u.lastmod) + '</lastmod></url>'; }).join('\n'),
+    '</urlset>',
+    ''
+  ].join('\n');
+  writeFileSync(join(REPO, 'sitemap.xml'), sitemap, 'utf8');
+  writeFileSync(join(REPO, 'robots.txt'), 'User-agent: *\nAllow: /\n\nSitemap: ' + absUrl('/sitemap.xml') + '\n', 'utf8');
 }
 function writeIndex(){
   const m = json(join(BRIEFS,'manifest.json'), {});
@@ -242,7 +288,6 @@ async function main(){
 
   // tentukan file
   const file = dateStr + '.html';
-  writeFileSync(join(BRIEFS, file), '\n', 'utf8'); // sentinel
 
   let finalHtml;
   if (DRY){
@@ -258,11 +303,12 @@ async function main(){
   }
 
   if(!finalHtml || finalHtml.length < 400) throw new Error('HTML kosong/terlalu pendek');
+  auditKnowledgeBrief(finalHtml, { production: !DRY });
   const meta = extractMeta(finalHtml);
   writeFileSync(join(BRIEFS, file), finalHtml + '\n', 'utf8');
   updateManifest(dateStr, meta, file);
   writeIndex();
-  // hapus sentinel sisa (bila masih ada)
+  writeSeoFiles();
   advanceState(state, sel); // sekarang maju; jika topik besok harus incremental (sisakan state ke topik berikutnya utk bucket yg sama): jangan maju di sini terlalu agresif—maju tiap running.
   console.log('done -> briefs/' + file + (DRY?' (dry-run)':''));
 }

@@ -1,0 +1,17 @@
+{
+  "name": "KnowledgeBrief.id",
+  "short_name": "KnowledgeBrief",
+  "description": "Kurasi pengetahuan harian untuk manajer eksekutif dan Subject Matter Expert.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1652a0",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
