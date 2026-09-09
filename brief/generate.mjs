@@ -1,4 +1,4 @@
-// Knowledge Brief generator (runner) — STATEFUL
+// Knowledge Brief generator (runner) - STATEFUL
 // Garis besar: baca kalender kurikulum + ledger + arsip, pilih topik hari kerja,
 // lalu minta LLM menulis SATU dokumen HTML edisi per kontrak prompt.md.
 // Mode --dry-run membangun kerangka HTML tanpa LLM (uji struktur/desain/CSS).
@@ -93,7 +93,7 @@ async function tavilySearch(q){
 }
 async function contextFor(topic){
   if (DRY) return '';
-  const q = (topic && topic.title ? topic.title : '') + (topic && topic.coreConcept ? ' — ' + topic.coreConcept : '');
+  const q = (topic && topic.title ? topic.title : '') + (topic && topic.coreConcept ? ' - ' + topic.coreConcept : '');
   if (!q) return '';
   const sel = process.env.TAVILY_API_KEY ? await tavilySearch(q) : [];
   return sel.map(function(r,i){ return (i+1)+'. '+r.title+'\n   '+r.link+'\n   '+r.snippet; }).join('\n\n');
@@ -120,7 +120,7 @@ async function callDeepSeek(promptText, topic){
     '',
     promptText,
     '',
-    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, atau tesis tanpa keberatan terbaik dan klausa falsifikasi.',
+    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, bahasa utopis, tesis tanpa keberatan terbaik, tesis tanpa klausa falsifikasi, atau edisi tanpa Salah kaprah, Gap lapangan, Pertanyaan diagnosis, dan Jangan pakai konsep ini jika.',
     '',
     'Tulis HTML lengkap sekarang. Kembalikan HANYA HTML (tanpa fence markdown, tanpa komentar).'
   ].join('\n');
@@ -143,7 +143,7 @@ function extractMeta(html){
   const lensM = html.match(/<div class="lensa">([\s\S]*?)<\/div>/);
   const teaserM = html.match(/<meta name="teaser" content="([^"]*)">/);
   let lens = lensM ? stripHtml(lensM[1]) : '';
-  lens = lens.replace(/^lensa\s*[:\-—]?\s*/i,'').replace(/^\s*Knowledge Brief\s*—\s*/i,'').trim();
+  lens = lens.replace(/^lensa\s*[:\-\u2014]?\s*/i,'').replace(/^\s*Knowledge Brief\s*[-\u2014]\s*/i,'').trim();
   return { dek: dekM ? stripHtml(dekM[1]) : '', lens: lens, teaser: teaserM ? teaserM[1].trim() : '' };
 }
 
@@ -204,7 +204,8 @@ function skeleton(full){
     '<p class="dek">Kerangka dry-run untuk menguji struktur & desain CSS. Nama topik ditampilkan agar kontrak HTML mudah disentuh.</p>',
     '<div class="seconds"><div class="blk-k">60 detik</div><ul><li>Bullet 1: inti yang bisa diucapkan dalam satu tarikan napas.</li><li>Bullet 2: satu pergeseran agar tidak terasa seperti ringkasan wiki.</li><li>Bullet 3: satu hal yang menuntut keputusan atau dalil.</li></ul><p class="act"><b>Ide untuk dibawa ke rapat:</b> &lt;isi satu ide tajam di sini&gt;</p></div>',
     '<div class="question"><div class="blk-k">Pertanyaan hari ini</div><p>Bagaimana <b></b> berubah ketika konteks keputusan berubah cepat?</p></div>',
-    '<section class="thesis"><div class="blk-k">Tesis hari ini</div><div class="thesis-pos"><b>Thesis.</b> &lt;posisi satu-dua kalimat, tegas, bisa diuji.&gt;</div><div class="thesis-support"><div class="field"><span class="fk">Penopang</span><p><span class="ev-fact">FACT</span> satu fakta/jejak · <span class="ev-inf">INFERENCE</span> satu kesimpulan.</p></div></div><div class="thesis-objection"><span class="fk">Keberatan terbaik</span><p>&lt;counter terkuat, ditulis adil.&gt;</p></div><div class="thesis-falsify"><span class="fk">Kapan tesis ini gugur</span><p>&lt;klausa falsifikasi eksplisit.&gt;</p></div></section>'
+    '<section class="thesis"><div class="blk-k">Tesis hari ini</div><div class="thesis-pos"><b>Thesis.</b> &lt;posisi satu-dua kalimat, tegas, bisa diuji.&gt;</div><div class="thesis-support"><div class="field"><span class="fk">Penopang</span><p><span class="ev-fact">FACT</span> satu fakta/jejak · <span class="ev-inf">INFERENCE</span> satu kesimpulan.</p></div></div><div class="thesis-objection"><span class="fk">Keberatan terbaik</span><p>&lt;counter terkuat, ditulis adil.&gt;</p></div><div class="thesis-falsify"><span class="fk">Kapan tesis ini gugur</span><p>&lt;klausa falsifikasi eksplisit.&gt;</p></div></section>',
+    '<section class="diagnostic"><div class="field"><span class="fk">Salah kaprah</span><p>&lt;satu salah kaprah yang sering terjadi.&gt;</p></div><div class="field"><span class="fk">Gap lapangan</span><p>&lt;satu gap praktik di rapat, memo, governance, atau eksekusi.&gt;</p></div><div class="field"><span class="fk">Pertanyaan diagnosis</span><p>&lt;satu pertanyaan untuk menguji situasi nyata.&gt;</p></div><div class="field"><span class="fk">Jangan pakai konsep ini jika</span><p>&lt;batas kondisi ketika konsep ini salah konteks.&gt;</p></div></section>'
   ];
   if(!full) return base.join('\n');
   const parts = [].concat(base);
@@ -261,17 +262,66 @@ function writeSeoFiles(){
 function writeIndex(){
   const m = json(join(BRIEFS,'manifest.json'), {});
   const dates = Object.keys(m).sort().reverse();
-  const rows = dates.map(function(d){ const e=m[d]; const pd=new Date(d+'T00:00:00Z').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Jakarta'}); return '<li><a href="'+e.file+'">'+(e.title||pd)+'</a>'+(e.dek?'<span>'+escapeHtml(e.dek)+'</span>':'')+'</li>'; }).join('\n');
-  const html = ['<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">','<title>Knowledge Brief — Arsip</title><style>',
+  const rows = dates.map(function(d){
+    const e = m[d];
+    const pd = new Date(d+'T00:00:00Z').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Jakarta'});
+    return '<li><a href="'+escapeHtml(e.file)+'">'+escapeHtml(e.title||pd)+'</a>'+(e.dek?'<span>'+escapeHtml(e.dek)+'</span>':'')+'</li>';
+  }).join('\n');
+  const html = ['<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">','<title>Knowledge Brief - Arsip</title><style>',
   ':root{--bg:#fff;--fg:#191919;--fg2:#6b6b6b;--accent:#1652a0;--border:#e8e8e8}',
   '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121212;--fg:#e6e6e6;--fg2:#9a9a9a;--accent:#5b9bff;--border:#2a2a2a}}',
   'body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif;line-height:1.6}',
   '.wrap{max-width:760px;margin:0 auto;padding:40px 20px 80px}h1{font-size:28px;margin:0 0 6px}.sub{color:var(--fg2);margin:0 0 24px}',
   'input{width:100%;padding:12px 14px;font-size:16px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--fg);margin-bottom:20px;box-sizing:border-box}',
   'ul{list-style:none;padding:0}li{padding:14px 0;border-top:1px solid var(--border)}a{color:var(--accent);text-decoration:none;font-weight:600;display:block}li span{color:var(--fg2);display:block;margin-top:3px;font-size:13.5px;line-height:1.55}',
-  '</style></head><body><div class="wrap"><h1>Knowledge Brief</h1><p class="sub">Arsip edisi — kurasi pengetahuan harian (diakumulasi). Ketik untuk memfilter.</p>','<input type="search" placeholder="Cari tanggal, topik, atau konsep…" oninput="f()"><ul id="list">',rows,
+  '</style></head><body><div class="wrap"><h1>Knowledge Brief</h1><p class="sub">Arsip edisi harian yang mengakumulasi konsep, pembanding, mekanisme praktik, dan catatan ledger.</p>','<input type="search" placeholder="Cari tanggal, topik, atau konsep…" oninput="f()"><ul id="list">',rows,
   '</ul><script>function f(){var q=(document.querySelector("input").value||"").toLowerCase();var items=document.querySelectorAll("#list li");for(var i=0;i<items.length;i++){items[i].style.display=items[i].textContent.toLowerCase().indexOf(q)>-1?"":"none";}}</script>','</div></body></html>'].join('\n');
   writeFileSync(join(BRIEFS,'index.html'), html, 'utf8');
+}
+
+function writeHomePage(){
+  const m = json(join(BRIEFS,'manifest.json'), {});
+  const dates = Object.keys(m).sort().reverse();
+  const latestDate = dates[0] || dateStr;
+  const latest = m[latestDate] || {};
+  const latestHref = latest.file ? '/briefs/' + latest.file : '/briefs/';
+  const latestTitle = latestDate ? new Date(latestDate + 'T00:00:00Z').toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric', timeZone:'Asia/Jakarta' }) : 'Edisi terbaru';
+  const latestHeadline = latest.headline || latest.title || 'Edisi terbaru';
+  const latestDek = latest.dek || 'Tiga konsep, satu tesis, dan satu gap praktik yang bisa diuji.';
+  const html = [
+    '<!doctype html>',
+    '<html lang="id">',
+    '<head>',
+    '<meta charset="utf-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    '<title>KnowledgeBrief.id</title>',
+    '<meta name="description" content="Kurasi pengetahuan harian untuk manajer eksekutif dan Subject Matter Expert: tiga konsep, satu tesis, dan satu gap praktik yang bisa diuji.">',
+    '<link rel="canonical" href="' + absUrl('/') + '">',
+    '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
+    '<link rel="manifest" href="/site.webmanifest">',
+    '<meta name="theme-color" content="#1652a0">',
+    '<meta property="og:type" content="website">',
+    '<meta property="og:title" content="KnowledgeBrief.id">',
+    '<meta property="og:description" content="Kurasi pengetahuan harian yang menghubungkan konsep, pembanding, dan mekanisme praktik.">',
+    '<meta property="og:url" content="' + absUrl('/') + '">',
+    '<style>',
+    ':root{--bg:#fff;--fg:#17191d;--muted:#626875;--faint:#8b93a1;--accent:#1652a0;--accent2:#0e7c66;--soft:#f5f8fc;--line:#e1e6ef;--serif:Georgia,"Times New Roman",serif;--sans:Inter,system-ui,sans-serif;--mono:ui-monospace,Consolas,monospace}',
+    '*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}.wrap{max-width:1080px;margin:0 auto;padding:0 24px}header{border-bottom:1px solid var(--line);padding:26px 0 18px}.nav{display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.brand{font-family:var(--serif);font-size:30px;font-weight:700;letter-spacing:-.01em}.brand span{color:var(--accent)}nav a{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-decoration:none;margin-left:18px}.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:46px;padding:58px 0 48px;border-bottom:1px solid var(--line)}h1{font-family:var(--serif);font-size:52px;line-height:1.06;margin:0 0 18px;letter-spacing:-.02em}.dek{font-family:var(--serif);font-size:22px;line-height:1.48;color:var(--muted);margin:0 0 26px}.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 18px;border-radius:6px;font-weight:700}.link{display:inline-block;margin-left:14px;color:var(--accent);font-weight:700;text-decoration:none}.latest{border-top:3px solid var(--accent);background:var(--soft);padding:20px 22px}.k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--faint);font-weight:800}.latest h2{font-family:var(--serif);font-size:26px;line-height:1.18;margin:8px 0}.latest a{color:var(--fg);text-decoration:none}.latest p{color:var(--muted);margin:0 0 6px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:34px 0 62px}.card{border-top:1px solid var(--line);padding-top:16px}.card h3{font-size:16px;margin:0 0 8px}.card p{margin:0;color:var(--muted);font-size:14.5px}.audit{border-top:1px solid var(--line);padding:18px 0 46px;color:var(--muted);font-size:13px}.audit b{color:var(--accent2);text-transform:uppercase;letter-spacing:.08em}@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:760px){.wrap{padding:0 18px}.nav{display:block}nav{margin-top:10px}nav a{margin-left:0;margin-right:16px}.hero,.grid{grid-template-columns:1fr}h1{font-size:36px}.dek{font-size:19px}.link{display:block;margin:12px 0 0}}',
+    '</style>',
+    '</head>',
+    '<body>',
+    '<header><div class="wrap nav"><div class="brand">KnowledgeBrief<span>.id</span></div><nav><a href="/briefs/">Arsip</a><a href="' + escapeHtml(latestHref) + '">Edisi terbaru</a></nav></div></header>',
+    '<main class="wrap">',
+    '<section class="hero"><div><h1>Tiga konsep setiap pagi, satu tesis yang bisa diuji.</h1><p class="dek">KnowledgeBrief.id bukan ringkasan berita. Ia membangun ledger pengetahuan dari konsep utama, konsep pembanding, dan mekanisme praktik yang bisa dipakai ulang oleh manajer eksekutif dan Subject Matter Expert.</p><a class="btn" href="' + escapeHtml(latestHref) + '">Baca edisi terbaru</a><a class="link" href="/briefs/">Lihat arsip</a></div>',
+    '<aside class="latest"><div class="k">Latest brief</div><h2><a href="' + escapeHtml(latestHref) + '">' + escapeHtml(latestHeadline) + '</a></h2><p>' + escapeHtml(latestTitle) + '</p><p>' + escapeHtml(latestDek) + '</p></aside></section>',
+    '<section class="grid"><div class="card"><h3>Konsep utama</h3><p>Satu konsep pusat dipilih untuk menjawab dilema keputusan hari itu, bukan untuk menambah istilah baru.</p></div><div class="card"><h3>Pembanding</h3><p>Konsep yang sering tertukar dipakai untuk membuat batas berpikir lebih jelas dan mencegah salah pakai.</p></div><div class="card"><h3>Praktik</h3><p>Setiap edisi turun ke mekanisme rapat, memo, review proyek, governance, atau desain organisasi.</p></div><div class="card"><h3>Ledger</h3><p>Konsep yang sudah dibahas dicatat agar edisi berikutnya membangun lapisan baru, bukan mengulang definisi lama.</p></div></section>',
+    '<div class="audit"><b>Editorial note</b> · Dibantu AI, dikurasi dengan kontrol editorial, dan dirancang untuk pengetahuan yang dapat diuji. Bukan nasihat investasi, hukum, atau akademik formal.</div>',
+    '</main>',
+    '</body>',
+    '</html>',
+    ''
+  ].join('\n');
+  writeFileSync(join(REPO, 'index.html'), html, 'utf8');
 }
 
 async function main(){
@@ -308,8 +358,9 @@ async function main(){
   writeFileSync(join(BRIEFS, file), finalHtml + '\n', 'utf8');
   updateManifest(dateStr, meta, file);
   writeIndex();
+  writeHomePage();
   writeSeoFiles();
-  advanceState(state, sel); // sekarang maju; jika topik besok harus incremental (sisakan state ke topik berikutnya utk bucket yg sama): jangan maju di sini terlalu agresif—maju tiap running.
+  advanceState(state, sel); // sekarang maju; jika topik besok harus incremental, jangan maju terlalu agresif.
   console.log('done -> briefs/' + file + (DRY?' (dry-run)':''));
 }
 

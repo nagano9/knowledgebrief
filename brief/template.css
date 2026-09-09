@@ -72,6 +72,11 @@ h4{font-family:var(--serif);font-size:19px;font-weight:600;margin:22px 0 7px;lin
 .fk{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
 .field p,.thesis-objection p,.thesis-falsify p{margin:0;color:var(--fg)}
 
+.diagnostic{border:1px solid var(--line);border-radius:6px;padding:18px 20px;margin:0 0 28px;background:var(--bg)}
+.diagnostic .field{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;margin-bottom:0}
+.diagnostic .field:first-child{border-top:0;padding-top:0;margin-top:0}
+.diagnostic .fk{color:var(--accent2)}
+
 .ev-fact{color:var(--accent2);font-weight:700}
 .ev-inf{color:var(--muted);font-style:italic}
 .ev-unc{color:#b45309;font-weight:600}

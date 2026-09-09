@@ -29,14 +29,21 @@ export function auditKnowledgeBrief(html, options = {}) {
   if (!/class=["']thesis/.test(html)) failures.push('missing thesis section');
   if (!/Kapan tesis ini gugur/i.test(text)) failures.push('missing falsification clause');
   if (!/Keberatan terbaik/i.test(text)) failures.push('missing strongest objection');
+  if (!/Salah kaprah/i.test(text)) failures.push('missing misconception block');
+  if (!/Gap lapangan/i.test(text)) failures.push('missing field gap block');
+  if (!/Pertanyaan diagnosis/i.test(text)) failures.push('missing diagnostic question');
+  if (!/(?:Jangan pakai konsep ini jika|Kapan konsep ini tidak berlaku)/i.test(text)) failures.push('missing boundary-of-use block');
 
   const productionBanned = [
     { name: 'dry-run marker', pattern: /\b(?:DRAF|DRY-RUN|dry-run|Kerangka dry-run)\b/i },
     { name: 'placeholder marker', pattern: /(?:Bullet\s+\d|isi satu ide|posisi satu-dua kalimat|klausa falsifikasi|Cth ilustrasi|<isi|&lt;isi)/i },
+    { name: 'utopian language', pattern: /\b(?:revolusioner|transformasional|game changer|mengubah segalanya|solusi untuk semua|peluang tanpa batas|masa depan yang cerah)\b/i },
+    { name: 'motivational filler', pattern: /\b(?:terus berinovasi|berpikir out of the box|menjadi lebih baik lagi|langkah nyata menuju kesuksesan)\b/i },
   ];
   const alwaysBanned = [
     { name: 'em dash', pattern: /—/ },
     { name: 'generic opening', pattern: /\b(?:Pada era yang terus berubah|Perlu dicatat bahwa|Dalam lanskap|Di tengah dinamika)\b/i },
+    { name: 'mechanical list framing', pattern: /\b(?:tiga konsep utama|3 konsep utama|berikut adalah|berikut ini adalah)\b/i },
   ];
   for (const rule of alwaysBanned) {
     if (rule.pattern.test(text) || rule.pattern.test(html)) failures.push(rule.name);

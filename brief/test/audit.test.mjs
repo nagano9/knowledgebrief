@@ -12,10 +12,17 @@ const repo = resolve(__dirname, '..', '..');
 const valid = `
 <!doctype html><html lang="id"><head><meta name="teaser" content="Strategi perlu diuji seperti hipotesis."></head><body>
 <p class="dek">Edisi ini menambat strategi pada bukti, bukan keyakinan awal.</p>
+<div class="seconds"><div class="blk-k">60 detik</div><ul><li>Satu konsep utama mengikat keputusan.</li><li>Satu konsep pembanding mencegah salah pakai.</li><li>Satu konsep praktik menurunkannya ke rapat.</li></ul><p class="act"><b>Ide untuk dibawa ke rapat:</b> tulis bukti pembatal sebelum anggaran dikunci.</p></div>
 <section class="thesis">
   <p class="thesis-pos"><b>Thesis.</b> Strategi yang sehat ditulis sebagai hipotesis yang punya sinyal pembukti dan sinyal pembatal.</p>
   <div class="thesis-objection"><span class="fk">Keberatan terbaik</span><p>Organisasi juga membutuhkan komitmen, bukan eksperimen tanpa batas.</p></div>
   <div class="thesis-falsify"><span class="fk">Kapan tesis ini gugur</span><p>Tesis ini gugur bila perubahan indikator tidak mengubah keputusan modal.</p></div>
+</section>
+<section class="diagnostic">
+  <div class="field"><span class="fk">Salah kaprah</span><p>Strategi sering disamakan dengan target.</p></div>
+  <div class="field"><span class="fk">Gap lapangan</span><p>Rapat menyetujui proyek tanpa menyebut sinyal pembatal.</p></div>
+  <div class="field"><span class="fk">Pertanyaan diagnosis</span><p>Bukti apa yang membuat keputusan diubah?</p></div>
+  <div class="field"><span class="fk">Jangan pakai konsep ini jika</span><p>Keputusan kecil dan murah lebih baik diuji cepat.</p></div>
 </section>
 </body></html>`;
 
@@ -37,6 +44,14 @@ test('audit allows VERIFY only outside production', () => {
 
 test('audit rejects missing falsification clause', () => {
   assert.throws(() => auditKnowledgeBrief(valid.replace('Kapan tesis ini gugur', 'Catatan')), /falsification/);
+});
+
+test('audit rejects brief without field gap discipline', () => {
+  assert.throws(() => auditKnowledgeBrief(valid.replace('Gap lapangan', 'Catatan lapangan')), /field gap/);
+});
+
+test('audit rejects utopian language', () => {
+  assert.throws(() => auditKnowledgeBrief(valid.replace('bukti, bukan keyakinan awal', 'game changer bagi semua organisasi')), /utopian/);
 });
 
 test('published editions pass production audit', () => {
