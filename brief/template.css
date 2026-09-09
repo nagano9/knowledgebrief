@@ -84,6 +84,14 @@ h4{font-family:var(--serif);font-size:19px;font-weight:600;margin:22px 0 7px;lin
 .trigger .field{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line)}
 .trigger a{color:var(--accent);text-decoration:none}
 
+.knowledge-matrix,.application-matrix{margin:0 0 28px}
+.knowledge-matrix .blk-k,.application-matrix .blk-k,.relationship .blk-k,.learn-next .blk-k{color:var(--accent2)}
+.relationship{border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:0 0 28px}
+.relationship p{margin:0;font-family:var(--serif);font-size:18px;line-height:1.58}
+.learn-next{border-top:1px solid var(--line-strong);padding-top:15px;margin:28px 0}
+.learn-next ul{margin:0;padding-left:18px}
+.learn-next li{margin:7px 0;line-height:1.55}
+
 .ev-fact{color:var(--accent2);font-weight:700}
 .ev-inf{color:var(--muted);font-style:italic}
 .ev-unc{color:#b45309;font-weight:600}

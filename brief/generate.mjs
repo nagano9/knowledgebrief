@@ -118,11 +118,32 @@ async function fetchPublicSignal(name, url){
 
 async function groundingContext(){
   if (DRY) return '';
-  const signals = await Promise.all([
+  const ecosystemSignals = await Promise.all([
     fetchPublicSignal('DailyBrief.id', 'https://dailybrief.id/'),
     fetchPublicSignal('LeaderBrief.id', 'https://leaderbrief.id/')
   ]);
-  return signals.join('\n\n');
+  const businessQuery = [
+    'Indonesia business macro regulation AI energy finance risk',
+    topicSafeTitle()
+  ].filter(Boolean).join(' ');
+  const businessSignals = process.env.TAVILY_API_KEY ? await tavilySearch(businessQuery) : [];
+  const businessText = businessSignals.length
+    ? 'Business context:\n' + businessSignals.map(function(r,i){ return (i+1)+'. '+r.title+'\n   '+r.link+'\n   '+r.snippet; }).join('\n\n')
+    : 'Business context: gunakan pengetahuan durable dari TOPIK_HARI_INI bila sinyal eksternal tidak tersedia.';
+  return ecosystemSignals.concat([businessText]).join('\n\n');
+}
+
+function topicSafeTitle(){
+  try {
+    const cfg = json(TOPICS_FILE, {});
+    const state = json(STATE_FILE, { counts: {} });
+    const sel = pickTopic(cfg, state, weekday);
+    const topics = cfg.topics || [];
+    const topic = sel ? topics.find(function(t){ return t.slug===sel.slug; }) : null;
+    return topic ? [topic.title, topic.coreConcept, topic.pillar].filter(Boolean).join(' ') : '';
+  } catch (e) {
+    return '';
+  }
 }
 
 // ---------- call LLM ----------
@@ -146,7 +167,7 @@ async function callDeepSeek(promptText, topic){
     '',
     promptText,
     '',
-    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, bahasa utopis, nomor ganda item-num, tesis tanpa keberatan terbaik, tesis tanpa klausa falsifikasi, edisi tanpa Dipicu oleh, edisi tanpa Mengapa konsep ini dipilih, atau edisi tanpa Salah kaprah, Gap lapangan, Pertanyaan diagnosis, dan Jangan pakai konsep ini jika.',
+    'AUDIT GATE: output produksi akan ditolak bila memuat DRAF, DRY-RUN, placeholder, em dash, VERIFY yang belum diselesaikan, bahasa utopis, nomor ganda item-num, tesis tanpa keberatan terbaik, tesis tanpa klausa falsifikasi, edisi tanpa Business Trigger, Mengapa konsep ini dipilih, Knowledge Matrix, Concept Relationship, Application Matrix, Learn Next, Salah kaprah, Gap lapangan, Pertanyaan diagnosis, dan Jangan pakai konsep ini jika.',
     '',
     'Tulis HTML lengkap sekarang. Kembalikan HANYA HTML (tanpa fence markdown, tanpa komentar).'
   ].join('\n');
@@ -230,7 +251,10 @@ function skeleton(full){
     '<div class="lensa">Lensa Knowledge Brief - Penerapan</div>',
     '<p class="dek">Kerangka dry-run untuk menguji struktur & desain CSS. Nama topik ditampilkan agar kontrak HTML mudah disentuh.</p>',
     '<div class="seconds"><div class="blk-k">60 detik</div><ul><li>Bullet 1: inti yang bisa diucapkan dalam satu tarikan napas.</li><li>Bullet 2: satu pergeseran agar tidak terasa seperti ringkasan wiki.</li><li>Bullet 3: satu hal yang menuntut keputusan atau dalil.</li></ul><p class="act"><b>Ide untuk dibawa ke rapat:</b> &lt;isi satu ide tajam di sini&gt;</p></div>',
-    '<section class="trigger"><div class="blk-k">Dipicu oleh</div><p>DailyBrief atau LeaderBrief memberi sinyal yang membuat konsep hari ini relevan.</p><div class="field"><span class="fk">Mengapa konsep ini dipilih</span><p>Konsep ini dipilih karena menjelaskan gap keputusan yang muncul dari sinyal tersebut.</p></div></section>',
+    '<section class="trigger"><div class="blk-k">Business Trigger</div><p>Sinyal bisnis membuat konsep hari ini relevan untuk keputusan perusahaan.</p><div class="field"><span class="fk">Mengapa konsep ini dipilih</span><p>Konsep ini dipilih karena menjelaskan gap keputusan yang muncul dari sinyal tersebut.</p></div></section>',
+    '<section class="knowledge-matrix"><div class="blk-k">Knowledge Matrix</div><div class="table-wrap"><table><thead><tr><th>Layer</th><th>Isi</th><th>Fungsi Praktis</th></tr></thead><tbody><tr><td>Konsep utama</td><td>...</td><td>...</td></tr><tr><td>Framework / Approach</td><td>...</td><td>...</td></tr></tbody></table></div></section>',
+    '<section class="relationship"><div class="blk-k">Concept Relationship</div><p>Konsep utama menjelaskan masalah, pembanding membatasi salah paham, dan toolkit menurunkannya ke praktik.</p></section>',
+    '<section class="application-matrix"><div class="blk-k">Application Matrix</div><div class="table-wrap"><table><thead><tr><th>Konteks</th><th>Dipakai untuk</th><th>Red flag</th></tr></thead><tbody><tr><td>Rapat</td><td>...</td><td>...</td></tr></tbody></table></div></section>',
     '<div class="question"><div class="blk-k">Pertanyaan hari ini</div><p>Bagaimana <b></b> berubah ketika konteks keputusan berubah cepat?</p></div>',
     '<section class="thesis"><div class="blk-k">Tesis hari ini</div><div class="thesis-pos"><b>Thesis.</b> &lt;posisi satu-dua kalimat, tegas, bisa diuji.&gt;</div><div class="thesis-support"><div class="field"><span class="fk">Penopang</span><p><span class="ev-fact">FACT</span> satu fakta/jejak · <span class="ev-inf">INFERENCE</span> satu kesimpulan.</p></div></div><div class="thesis-objection"><span class="fk">Keberatan terbaik</span><p>&lt;counter terkuat, ditulis adil.&gt;</p></div><div class="thesis-falsify"><span class="fk">Kapan tesis ini gugur</span><p>&lt;klausa falsifikasi eksplisit.&gt;</p></div></section>',
     '<section class="diagnostic"><div class="field"><span class="fk">Salah kaprah</span><p>&lt;satu salah kaprah yang sering terjadi.&gt;</p></div><div class="field"><span class="fk">Gap lapangan</span><p>&lt;satu gap praktik di rapat, memo, governance, atau eksekusi.&gt;</p></div><div class="field"><span class="fk">Pertanyaan diagnosis</span><p>&lt;satu pertanyaan untuk menguji situasi nyata.&gt;</p></div><div class="field"><span class="fk">Jangan pakai konsep ini jika</span><p>&lt;batas kondisi ketika konsep ini salah konteks.&gt;</p></div></section>'
@@ -247,6 +271,7 @@ function skeleton(full){
   ];
   lenses.forEach(function(L,i){ parts.push('<h2 class="sec-kicker" id="sec-'+(i+1)+'">'+(i+1)+' · '+L[0]+'<span class="spacer"></span></h2><div class="field"><span class="fk">Lensa</span><p>'+L[1]+'</p></div><article class="item"><div class="meta"><span class="chip">'+escapeHtml(L[0])+'</span></div><p class="lede">Cth ilustrasi konsep & aplikasi nyata (fakta ber-<span class="ev-fact">FACT</span>, tafsir <span class="ev-inf">INFERENCE</span>, yang ragu <span class="ev-unc">VERIFY</span>).</p></article>'); });
   parts.push('<dl class="glossary"><div class="blk-k">Glosarium harian</div><dt>Istilah</dt><dd>definisi kanonik satu baris.</dd></dl>');
+  parts.push('<section class="learn-next"><div class="blk-k">Learn Next</div><ul><li><b>Konsep prasyarat:</b> ...</li><li><b>Konsep terkait:</b> ...</li><li><b>Jalur 7 hari:</b> ...</li></ul></section>');
   parts.push('<section class="whatnot"><p><b>Yang tidak boleh dipercaya begitu saja:</b> &lt;satu common belief yang menyesatkan terkait topik ini.&gt;</p></section>');
   parts.push('<section class="ledger-note"><div class="blk-k">Catatan ledger</div><p>[dry-run] Topik ini akan tercatat di ledger agar edisi besok merujuk, bukan menjelaskan ulang.</p></section>');
   return parts.join('\n');

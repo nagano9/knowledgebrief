@@ -33,8 +33,12 @@ export function auditKnowledgeBrief(html, options = {}) {
   if (!/Gap lapangan/i.test(text)) failures.push('missing field gap block');
   if (!/Pertanyaan diagnosis/i.test(text)) failures.push('missing diagnostic question');
   if (!/(?:Jangan pakai konsep ini jika|Kapan konsep ini tidak berlaku)/i.test(text)) failures.push('missing boundary-of-use block');
-  if (!/Dipicu oleh/i.test(text)) failures.push('missing trigger block');
+  if (!/Business Trigger/i.test(text)) failures.push('missing business trigger block');
   if (!/Mengapa konsep ini dipilih/i.test(text)) failures.push('missing concept selection rationale');
+  if (!/Knowledge Matrix/i.test(text)) failures.push('missing knowledge matrix');
+  if (!/Concept Relationship/i.test(text)) failures.push('missing concept relationship');
+  if (!/Application Matrix/i.test(text)) failures.push('missing application matrix');
+  if (!/Learn Next/i.test(text)) failures.push('missing learn next block');
   if (/<span\s+class=["']item-num["']/i.test(html)) failures.push('duplicate visible numbering');
 
   const productionBanned = [

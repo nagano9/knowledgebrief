@@ -13,7 +13,11 @@ const valid = `
 <!doctype html><html lang="id"><head><meta name="teaser" content="Strategi perlu diuji seperti hipotesis."></head><body>
 <p class="dek">Edisi ini menambat strategi pada bukti, bukan keyakinan awal.</p>
 <div class="seconds"><div class="blk-k">60 detik</div><ul><li>Satu konsep utama mengikat keputusan.</li><li>Satu konsep pembanding mencegah salah pakai.</li><li>Satu konsep praktik menurunkannya ke rapat.</li></ul><p class="act"><b>Ide untuk dibawa ke rapat:</b> tulis bukti pembatal sebelum anggaran dikunci.</p></div>
-<section class="trigger"><div class="blk-k">Dipicu oleh</div><p>DailyBrief menampilkan tekanan keputusan pada BUMN dan AI. LeaderBrief memberi konteks leadership tentang sponsor keputusan.</p><div class="field"><span class="fk">Mengapa konsep ini dipilih</span><p>Konsep ini membantu membaca kapan target berubah menjadi pembelaan proyek.</p></div></section>
+<section class="trigger"><div class="blk-k">Business Trigger</div><p>Tekanan keputusan pada BUMN dan AI membuat strategi perlu dibaca sebagai hipotesis.</p><div class="field"><span class="fk">Mengapa konsep ini dipilih</span><p>Konsep ini membantu membaca kapan target berubah menjadi pembelaan proyek.</p></div></section>
+<section class="knowledge-matrix"><div class="blk-k">Knowledge Matrix</div><table><tr><th>Layer</th><th>Isi</th></tr><tr><td>Konsep utama</td><td>Strategi sebagai hipotesis</td></tr></table></section>
+<section class="relationship"><div class="blk-k">Concept Relationship</div><p>Hipotesis menjelaskan asumsi, target menjadi pembanding, dan review cadence menjadi mekanisme praktik.</p></section>
+<section class="application-matrix"><div class="blk-k">Application Matrix</div><table><tr><th>Konteks</th><th>Pakai untuk</th></tr><tr><td>Rapat capex</td><td>Menulis bukti pembatal.</td></tr></table></section>
+<section class="learn-next"><div class="blk-k">Learn Next</div><ul><li>Decision rights</li><li>Pre-mortem</li></ul></section>
 <section class="thesis">
   <p class="thesis-pos"><b>Thesis.</b> Strategi yang sehat ditulis sebagai hipotesis yang punya sinyal pembukti dan sinyal pembatal.</p>
   <div class="thesis-objection"><span class="fk">Keberatan terbaik</span><p>Organisasi juga membutuhkan komitmen, bukan eksperimen tanpa batas.</p></div>
@@ -61,6 +65,10 @@ test('audit rejects duplicate visible numbering', () => {
 
 test('audit rejects missing trigger rationale', () => {
   assert.throws(() => auditKnowledgeBrief(valid.replace('Mengapa konsep ini dipilih', 'Catatan konsep')), /concept selection/);
+});
+
+test('audit rejects missing knowledge matrix', () => {
+  assert.throws(() => auditKnowledgeBrief(valid.replace('Knowledge Matrix', 'Knowledge Notes')), /knowledge matrix/);
 });
 
 test('published editions pass production audit', () => {
