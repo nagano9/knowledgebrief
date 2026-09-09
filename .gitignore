@@ -1,0 +1,7 @@
+# dependensi & rahasia
+node_modules/
+.env
+
+# Catatan: briefs/*.html, brief/rotation-state.json, brief/ledger/archive.jsonl
+# TIDAK di-ignore. Wajib ter-commit agar GitHub Pages tersaji dan memori rotasi
+# bertahan antar-run Action (stateful, bukan membuat ulang memori tiap pagi).

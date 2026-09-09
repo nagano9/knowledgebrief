@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "note": "Kalender kurikulum Knowledge Brief. Setiap hari kerja memilih blok pengetahuan dari bucket hari itu. buckets berisi urutan yang diputar (round-robin); pekan kelima Jumat diganti 'Sintesis'. Tiap topic bersifat durable (bukan berita).",
+  "bucketByWeekday": {
+    "senin": [
+      "mengapa-moat",
+      "decision-rights",
+      "capital-cost"
+    ],
+    "selasa": [
+      "agency-incentives",
+      "judgment-debias",
+      "expertise-calibration"
+    ],
+    "rabu": [
+      "strategy-hypothesis",
+      "uncertainty-capex",
+      "tacit-knowledge"
+    ],
+    "kamis": [
+      "where-how-to-win",
+      "org-learning-vs-knowledge",
+      "bias-sunk-cost"
+    ],
+    "jumat": [
+      "sintesis-pekanan"
+    ]
+  },
+  "topics": [
+    {
+      "slug": "mengapa-moat",
+      "title": "Moat & keunggulan yang bertahan",
+      "pillar": "Strategy",
+      "model": "Porter 5 Forces / VRIO",
+      "coreConcept": "Keunggulan kompetitif yang tahan lama (moat) dan darimana margin bertahan."
+    },
+    {
+      "slug": "decision-rights",
+      "title": "Decision rights & desain organisasi",
+      "pillar": "Organisasi",
+      "model": "Who decides / who advises",
+      "coreConcept": "Kejelasan siapa memutus vs menasihati, bukan sekadar struktur diagram."
+    },
+    {
+      "slug": "capital-cost",
+      "title": "Biaya modal & hurdle rate",
+      "pillar": "Finance",
+      "model": "WACC; NPV/IRR sebagai filter",
+      "coreConcept": "Hurdle yang salah mensubsidi proyek berisiko di atas risiko sejati."
+    },
+    {
+      "slug": "agency-incentives",
+      "title": "Principal-Agent & insentif",
+      "pillar": "Organisasi",
+      "model": "Agency theory; skin-in-the-game",
+      "coreConcept": "Jensen & Meckling 1976; ketika insentif berbasis saham bocor karena output tak teratribusi."
+    },
+    {
+      "slug": "judgment-debias",
+      "title": "Penilaian & debias",
+      "pillar": "Decision",
+      "model": "Kahneman; calibration",
+      "coreConcept": "Mengurangi bias konfirmasi & jejak sunken-cost dalam keputusan bersama."
+    },
+    {
+      "slug": "expertise-calibration",
+      "title": "Keahlian & kalibrasi",
+      "pillar": "Knowledge",
+      "model": "Dunning-Kruger; calibration vs confidence",
+      "coreConcept": "Kapan percaya judgment SME vs butuh data; SME yang tak terkailibrasi = bahaya."
+    },
+    {
+      "slug": "strategy-hypothesis",
+      "title": "Strategi sebagai hipotesis",
+      "pillar": "Strategy",
+      "model": "Emergent vs deliberate (Mintzberg)",
+      "coreConcept": "Rencana jangka panjang sebagai kumpulan hipotesis yang harus diuji teratur."
+    },
+    {
+      "slug": "uncertainty-capex",
+      "title": "Keputusan di bawah ketidakpastian",
+      "pillar": "Decision",
+      "model": "Pre-mortem; base rates; Bayesian",
+      "coreConcept": "Capex approval saat harga/jual belum pasti; murahnya pre-mortem vs post-mortem."
+    },
+    {
+      "slug": "tacit-knowledge",
+      "title": "Pengetahuan tacit vs eksplisit",
+      "pillar": "Knowledge",
+      "model": "Polanyi / Nonaka",
+      "coreConcept": "Knowledge yang tak dieksplisitkan = aset yang keluar saat orang pensiun."
+    },
+    {
+      "slug": "where-how-to-win",
+      "title": "Di mana bermain & bagaimana menang",
+      "pillar": "Strategy",
+      "model": "Lafley-Martin choice",
+      "coreConcept": "Pilihan strategi = menolak opsi lain; konsekuensi keputusan portofolio."
+    },
+    {
+      "slug": "org-learning",
+      "title": "Organisasi belajar vs sekadar menumpuk dokumen",
+      "pillar": "Knowledge",
+      "model": "Curse of knowledge; PKM",
+      "coreConcept": "Menurunkan biaya belajar-ulang, bukan menambah repository."
+    },
+    {
+      "slug": "bias-sunk-cost",
+      "title": "Bias & sunken-cost",
+      "pillar": "Decision",
+      "model": "Escalation of commitment",
+      "coreConcept": "Sunk cost bukan alasan; kamuflase reputasi dalam kelanjutan proyek gagal."
+    },
+    {
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "model": "Rangkum lintas topik",
+      "coreConcept": "Tarikan benang dari edisi pekan itu; tesis yang berdiri/gugur dan gap pengetahuan."
+    }
+  ],
+  "rotation": {
+    "workingWeekend": [
+      "Sabtu",
+      "Minggu",
+      "libur"
+    ],
+    "sintesisOnWeekNumberModulo": 5
+  }
+}

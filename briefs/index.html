@@ -1,0 +1,13 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge Brief — Arsip</title><style>
+:root{--bg:#fff;--fg:#191919;--fg2:#6b6b6b;--accent:#1652a0;--border:#e8e8e8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121212;--fg:#e6e6e6;--fg2:#9a9a9a;--accent:#5b9bff;--border:#2a2a2a}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:40px 20px 80px}h1{font-size:28px;margin:0 0 6px}.sub{color:var(--fg2);margin:0 0 24px}
+input{width:100%;padding:12px 14px;font-size:16px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--fg);margin-bottom:20px;box-sizing:border-box}
+ul{list-style:none;padding:0}li{padding:14px 0;border-top:1px solid var(--border)}a{color:var(--accent);text-decoration:none;font-weight:600;display:block}li span{color:var(--fg2);display:block;margin-top:3px;font-size:13.5px;line-height:1.55}
+</style></head><body><div class="wrap"><h1>Knowledge Brief</h1><p class="sub">Arsip edisi — kurasi pengetahuan harian (diakumulasi). Ketik untuk memfilter.</p>
+<input type="search" placeholder="Cari tanggal, topik, atau konsep…" oninput="f()"><ul id="list">
+<li><a href="2026-09-02.html">Rabu, 2 September 2026 — Penerapan</a><span>Kerangka dry-run untuk menguji struktur &amp; desain CSS. Nama topik ditampilkan agar kontrak HTML mudah disentuh.</span></li>
+</ul><script>function f(){var q=(document.querySelector("input").value||"").toLowerCase();var items=document.querySelectorAll("#list li");for(var i=0;i<items.length;i++){items[i].style.display=items[i].textContent.toLowerCase().indexOf(q)>-1?"":"none";}}</script>
+</div></body></html>

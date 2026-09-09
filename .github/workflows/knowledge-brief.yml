@@ -1,0 +1,47 @@
+name: Knowledge Brief
+
+on:
+  schedule:
+    # 22:30 UTC (Minggu-Kamis) = 05:30 WIB (Senin-Jumat)
+    - cron: '30 22 * * 0-4'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install deps
+        run: npm install --no-fund --no-audit
+        working-directory: brief
+
+      - name: Generate edisi Knowledge Brief
+        run: node generate.mjs
+        working-directory: brief
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Tidak ada perubahan"
+          else
+            git commit -m "knowledge brief $(date -u +%F)"
+            git push
+          fi
