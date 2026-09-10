@@ -12,7 +12,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { auditKnowledgeBrief } from './audit.mjs';
+import { AuditError, auditKnowledgeBrief } from './audit.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ENGINE = __dirname;
@@ -192,6 +192,18 @@ function extractMeta(html){
   let lens = lensM ? stripHtml(lensM[1]) : '';
   lens = lens.replace(/^lensa\s*[:\-\u2014]?\s*/i,'').replace(/^\s*Knowledge Brief\s*[-\u2014]\s*/i,'').trim();
   return { dek: dekM ? stripHtml(dekM[1]) : '', lens: lens, teaser: teaserM ? teaserM[1].trim() : '' };
+}
+
+function normalizeAuditLanguage(html) {
+  return String(html || '')
+    .replace(/\bPada era yang terus berubah\b/gi, 'Saat variabel keputusan berubah cepat')
+    .replace(/\bPerlu dicatat bahwa\b/gi, '')
+    .replace(/\bDalam lanskap\b/gi, 'Dalam kondisi')
+    .replace(/\bDi tengah dinamika\b/gi, 'Dalam kondisi')
+    .replace(/\btiga konsep utama\b/gi, 'tiga konsep')
+    .replace(/\b3 konsep utama\b/gi, 'tiga konsep')
+    .replace(/\bberikut ini adalah\b/gi, '')
+    .replace(/\bberikut adalah\b/gi, '');
 }
 
 function updateLedger(topic, meta){
@@ -404,15 +416,31 @@ async function main(){
     const enrichedPrompt = promptText
       + (grounding ? '\n\n=== SINYAL GROUNDING DARI EKOSISTEM BRIEF ===\n' + grounding : '')
       + (context ? '\n\n=== MATERI KONTEKSTUAL (boleh verifikasi) ===\n' + context : '');
-    let html = await callDeepSeek(enrichedPrompt, topic);
-    finalHtml = injectTemplate( addChrome(html) );
-    updateLedger(topic, extractMeta(finalHtml));
+    let lastAudit = '';
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      const repairNote = lastAudit
+        ? '\n\n=== HASIL AUDIT DRAFT SEBELUMNYA ===\n' + lastAudit + '\nTulis ulang dari awal. Jangan buka dengan frasa generik, jangan pakai framing list mekanis, dan buka dengan trigger bisnis, angka, keputusan, atau konsep yang spesifik.'
+        : '';
+      console.log('calling deepseek... attempt ' + attempt);
+      const html = await callDeepSeek(enrichedPrompt + repairNote, topic);
+      const dressed = normalizeAuditLanguage(injectTemplate(addChrome(html)));
+      try {
+        auditKnowledgeBrief(dressed, { production: true });
+        finalHtml = dressed;
+        break;
+      } catch (e) {
+        if (!(e instanceof AuditError) || attempt === 3) throw e;
+        lastAudit = e.message;
+        console.error('audit rejected attempt ' + attempt + ': ' + e.message);
+      }
+    }
   }
 
   if(!finalHtml || finalHtml.length < 400) throw new Error('HTML kosong/terlalu pendek');
   auditKnowledgeBrief(finalHtml, { production: !DRY });
   const meta = extractMeta(finalHtml);
   writeFileSync(join(BRIEFS, file), finalHtml + '\n', 'utf8');
+  if (!DRY) updateLedger(topic, meta);
   updateManifest(dateStr, meta, file);
   writeIndex();
   writeHomePage();
