@@ -436,6 +436,7 @@ function injectTemplate(html, visualUrl){
   const seo = [
     '<title>' + title + '</title>',
     '<meta name="description" content="' + description + '">',
+    '<meta name="robots" content="index,follow,max-image-preview:large">',
     '<link rel="canonical" href="' + absUrl('/briefs/' + dateStr + '.html') + '">',
     '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
     '<link rel="manifest" href="/site.webmanifest">',
@@ -543,7 +544,7 @@ function writeIndex(){
     const pd = new Date(d+'T00:00:00Z').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Jakarta'});
     return '<li><a href="'+escapeHtml(e.file)+'">'+escapeHtml(e.title||pd)+'</a>'+(e.dek?'<span>'+escapeHtml(e.dek)+'</span>':'')+'</li>';
   }).join('\n');
-  const html = ['<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">','<title>Knowledge Brief - Arsip</title><style>',
+  const html = ['<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">','<title>Knowledge Brief - Arsip</title><meta name="description" content="Arsip edisi harian KnowledgeBrief.id."><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="' + absUrl('/briefs/') + '"><style>',
   ':root{--bg:#fff;--fg:#191919;--fg2:#6b6b6b;--accent:#1652a0;--border:#e8e8e8}',
   '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121212;--fg:#e6e6e6;--fg2:#9a9a9a;--accent:#5b9bff;--border:#2a2a2a}}',
   'body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif;line-height:1.6}',
@@ -572,6 +573,7 @@ function writeHomePage(){
     '<meta name="viewport" content="width=device-width, initial-scale=1">',
     '<title>KnowledgeBrief.id</title>',
     '<meta name="description" content="Kurasi pengetahuan harian untuk manajer eksekutif dan Subject Matter Expert: tiga konsep, satu tesis, dan satu gap praktik yang bisa diuji.">',
+    '<meta name="robots" content="index,follow,max-image-preview:large">',
     '<link rel="canonical" href="' + absUrl('/') + '">',
     '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
     '<link rel="manifest" href="/site.webmanifest">',
