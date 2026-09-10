@@ -28,7 +28,8 @@ const LEDGER_FILE = join(LEDGER_DIR, 'ledger.json');
 const SITE_URL = 'https://knowledgebrief.id';
 
 const DEEPSEEK = process.env.DEEPSEEK_API_KEY || '';
-const MODEL = process.env.BRIEF_MODEL || 'deepseek-chat';
+const MODEL = process.env.BRIEF_MODEL || 'deepseek-v4-flash';
+const MAX_TOKENS = Number(process.env.BRIEF_MAX_TOKENS || 6200);
 const DRY = process.argv.includes('--dry-run');
 const WIB_ONLY = process.env.KB_MODE !== 'utc';
 
@@ -173,7 +174,7 @@ async function callDeepSeek(promptText, topic){
   ].join('\n');
   const res = await fetch('https://api.deepseek.com/chat/completions', {
     method: 'POST', headers: { 'Content-Type':'application/json', 'Authorization':'Bearer ' + DEEPSEEK },
-    body: JSON.stringify({ model:MODEL, messages:[{role:'system',content:sys},{role:'user',content:user}], temperature:0.4, stream:false }),
+    body: JSON.stringify({ model:MODEL, messages:[{role:'system',content:sys},{role:'user',content:user}], temperature:0.4, max_tokens:MAX_TOKENS, stream:false }),
     signal: AbortSignal.timeout(420000)
   });
   if (!res.ok){ const b=await res.text(); throw new Error('DeepSeek HTTP '+res.status+': '+b.slice(0,300)); }

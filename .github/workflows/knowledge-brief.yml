@@ -37,6 +37,8 @@ jobs:
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          BRIEF_MODEL: ${{ vars.BRIEF_MODEL || 'deepseek-v4-flash' }}
+          BRIEF_MAX_TOKENS: ${{ vars.BRIEF_MAX_TOKENS || '6200' }}
 
       - name: Commit & push
         run: |
