@@ -58,6 +58,10 @@ h4{font-family:var(--serif);font-size:19px;font-weight:600;margin:22px 0 7px;lin
 .lensa{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin:0 0 9px}
 .dek{font-family:var(--serif);font-size:22px;line-height:1.4;font-weight:500;margin:0 0 26px;color:var(--fg)}
 
+.knowledge-canvas{margin:0 0 30px;padding:0;border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line);background:#fff}
+.knowledge-canvas img{display:block;width:100%;height:auto;background:#fff}
+.knowledge-canvas figcaption{font-size:12px;line-height:1.5;color:var(--muted);margin:8px 0 12px;font-family:var(--mono);letter-spacing:.02em}
+
 .blk-k{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
 .seconds{border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line);padding:18px 0;margin:0 0 24px;background:transparent}
 .seconds ul{list-style:none;padding:0;margin:0 0 12px}

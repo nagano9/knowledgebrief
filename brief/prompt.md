@@ -14,6 +14,9 @@
   manusia memeriksanya sebelum diyakini final. Fakta yang ada di materi TIDAK perlu ditandai.
 - Tulis brief sebagai SATU dokumen HTML mandiri. JANGAN menulis blok <style>, JANGAN inline style,
   JANGAN link font. Desain di-inject runner.
+- JANGAN membuat gambar, SVG, canvas, atau diagram visual sendiri. Runner akan menyisipkan
+  "Knowledge Canvas" visual dengan template putih-bersih bergaya whiteboard premium setelah dek.
+  Tugas Anda adalah menulis isi konseptual yang presisi; visual dibuat dari metadata dan topik.
 - Sertakan 3 elemen metadata WAJIB (dipakai halaman arsip & homepage):
   - Di dalam <head>: <meta name="teaser" content="SATU KALIMAT yang membuat orang bertanya lebih jauh">
   - Sebelum thesis: <div class="lensa">Lensa Knowledge Brief - {Konsep|Aturan|Penerapan|Geseran|Sintesis}</div>

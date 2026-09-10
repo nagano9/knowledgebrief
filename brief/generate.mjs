@@ -18,6 +18,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ENGINE = __dirname;
 const REPO = resolve(__dirname, '..');
 const BRIEFS = join(REPO, 'briefs');
+const ASSETS = join(REPO, 'assets');
+const VISUALS = join(ASSETS, 'visuals');
 const LEDGER_DIR = join(ENGINE, 'ledger');
 const STATE_FILE = join(ENGINE, 'rotation-state.json');
 const TOPICS_FILE = join(ENGINE, 'topics.json');
@@ -58,6 +60,7 @@ const pretty = new Intl.DateTimeFormat('id-ID', { timeZone:'Asia/Jakarta', weekd
 
 function json(path, fallback){ if(!existsSync(path)) return fallback; try{ return JSON.parse(readFileSync(path,'utf8')); } catch(e){ return fallback; } }
 function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escapeXml(s){ return escapeHtml(s).replace(/'/g, '&apos;'); }
 function isWorkingDay(w){ return w!=='Sabtu' && w!=='Minggu'; }
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
 function absUrl(pathname){ return SITE_URL + pathname; }
@@ -207,6 +210,130 @@ function normalizeAuditLanguage(html) {
     .replace(/\bberikut adalah\b/gi, '');
 }
 
+function compactText(s, fallback = '') {
+  return String(s || fallback || '')
+    .replace(/\s+/g, ' ')
+    .replace(/[<>]/g, '')
+    .trim();
+}
+
+function wrapWords(text, limit, maxLines = 3) {
+  const words = compactText(text).split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = '';
+  for (const word of words) {
+    const next = line ? line + ' ' + word : word;
+    if (next.length > limit && line) {
+      lines.push(line);
+      line = word;
+      if (lines.length >= maxLines) break;
+    } else {
+      line = next;
+    }
+  }
+  if (line && lines.length < maxLines) lines.push(line);
+  return lines.length ? lines : [''];
+}
+
+function svgLines(text, x, y, opts = {}) {
+  const size = opts.size || 24;
+  const limit = opts.limit || 30;
+  const maxLines = opts.maxLines || 3;
+  const weight = opts.weight || 500;
+  const fill = opts.fill || '#17191d';
+  const family = opts.family || '"Segoe Print","Comic Sans MS","Trebuchet MS",sans-serif';
+  return wrapWords(text, limit, maxLines)
+    .map(function(line, i) {
+      return '<text x="' + x + '" y="' + (y + i * (size + 8)) + '" font-family=' + "'" + family + "'" + ' font-size="' + size + '" font-weight="' + weight + '" fill="' + fill + '">' + escapeXml(line) + '</text>';
+    })
+    .join('\n');
+}
+
+function renderKnowledgeCanvasSvg(topic, meta) {
+  const title = compactText(topic.title || topic.slug || 'Knowledge Brief');
+  const model = compactText(topic.model || topic.coreConcept || 'Framework');
+  const core = compactText(topic.coreConcept || topic.title || 'Konsep inti');
+  const pillar = compactText(topic.pillar || 'Decision knowledge');
+  const lens = compactText(meta.lens || meta.dek || 'Lensa hari ini');
+  const dek = compactText(meta.dek || 'Peta konsep, hubungan, dan batas pemakaian.');
+  const dateLabel = pretty;
+  return [
+    '<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840" role="img" aria-labelledby="title desc">',
+    '<title id="title">' + escapeXml(title + ' - Knowledge Canvas') + '</title>',
+    '<desc id="desc">' + escapeXml('Visual knowledge canvas for ' + title) + '</desc>',
+    '<rect width="1400" height="840" fill="#ffffff"/>',
+    '<path d="M64 76 C240 56, 482 70, 660 60 C900 46, 1120 66, 1328 54" fill="none" stroke="#e6e8ee" stroke-width="3" stroke-linecap="round"/>',
+    '<text x="72" y="88" font-family="ui-monospace,Consolas,monospace" font-size="22" letter-spacing="3" fill="#7a8290">KNOWLEDGE CANVAS</text>',
+    '<text x="1126" y="88" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#8a92a0">' + escapeXml(dateLabel) + '</text>',
+    '<g transform="translate(86 132)">',
+    '<path d="M0 0 H1228 Q1260 0 1260 32 V606 Q1260 638 1228 638 H0 Q-32 638 -32 606 V32 Q-32 0 0 0 Z" fill="#fff" stroke="#20242b" stroke-width="3.5"/>',
+    '<path d="M-6 12 C250 -8, 420 18, 638 6 C840 -5, 1030 9, 1250 2" fill="none" stroke="#dfe3ec" stroke-width="2"/>',
+    '<path d="M382 50 C508 28, 725 24, 874 56 C972 78, 1024 148, 1010 244 C992 366, 832 424, 668 418 C490 412, 336 332, 316 214 C300 118, 330 66, 382 50 Z" fill="#f7fbff" stroke="#1652a0" stroke-width="4" stroke-linecap="round"/>',
+    svgLines(title, 386, 136, { size: 46, limit: 24, maxLines: 3, weight: 700, fill: '#11151a', family: 'Georgia,"Times New Roman",serif' }),
+    '<text x="426" y="304" font-family="ui-monospace,Consolas,monospace" font-size="21" letter-spacing="2.6" fill="#1652a0">CORE CONCEPT</text>',
+    svgLines(core, 426, 345, { size: 27, limit: 34, maxLines: 2, weight: 600, fill: '#1652a0' }),
+    '<g transform="translate(54 132)">',
+    '<path d="M0 0 C92 -18, 188 -12, 278 8 C318 18, 342 54, 334 102 C326 154, 268 178, 164 176 C70 174, 10 142, -4 92 C-17 44, -4 11, 0 0 Z" fill="#fffaf5" stroke="#b45309" stroke-width="3"/>',
+    '<text x="24" y="42" font-family="ui-monospace,Consolas,monospace" font-size="17" letter-spacing="2" fill="#b45309">BUSINESS TRIGGER</text>',
+    svgLines(lens, 24, 80, { size: 23, limit: 24, maxLines: 3, fill: '#2b2b2b' }),
+    '</g>',
+    '<g transform="translate(900 132)">',
+    '<path d="M0 10 C78 -10, 218 -6, 306 6 C344 12, 366 44, 360 90 C354 148, 294 176, 188 176 C88 176, 14 142, -2 94 C-16 52, -10 24, 0 10 Z" fill="#f7fff9" stroke="#0e7c66" stroke-width="3"/>',
+    '<text x="24" y="42" font-family="ui-monospace,Consolas,monospace" font-size="17" letter-spacing="2" fill="#0e7c66">FRAMEWORK</text>',
+    svgLines(model, 24, 80, { size: 23, limit: 24, maxLines: 3, fill: '#21312d' }),
+    '</g>',
+    '<g transform="translate(94 438)">',
+    '<path d="M0 0 H308 V118 H0 Z" fill="#ffffff" stroke="#20242b" stroke-width="2.5"/>',
+    '<path d="M18 28 H286 M18 60 H252 M18 92 H220" stroke="#aeb6c4" stroke-width="3" stroke-linecap="round"/>',
+    '<text x="18" y="-20" font-family="ui-monospace,Consolas,monospace" font-size="18" letter-spacing="2" fill="#6b7280">THEORY</text>',
+    svgLines(pillar, 18, 42, { size: 22, limit: 22, maxLines: 2, fill: '#17191d' }),
+    '</g>',
+    '<path d="M426 496 C520 458, 664 458, 758 496" fill="none" stroke="#1652a0" stroke-width="4" stroke-linecap="round"/>',
+    '<path d="M742 482 L762 496 L738 506" fill="none" stroke="#1652a0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
+    '<text x="520" y="548" font-family="ui-monospace,Consolas,monospace" font-size="18" letter-spacing="2" fill="#1652a0">APPLIED APPROACH</text>',
+    svgLines(dek, 454, 586, { size: 24, limit: 46, maxLines: 2, fill: '#23272f' }),
+    '<g transform="translate(882 438)">',
+    '<path d="M0 0 H308 V118 H0 Z" fill="#fff7f7" stroke="#b42318" stroke-width="2.5"/>',
+    '<path d="M28 30 L84 86 M84 30 L28 86" stroke="#b42318" stroke-width="6" stroke-linecap="round"/>',
+    '<text x="112" y="42" font-family="ui-monospace,Consolas,monospace" font-size="17" letter-spacing="2" fill="#b42318">AVOID</text>',
+    '<text x="112" y="78" font-family="Segoe Print,Comic Sans MS,sans-serif" font-size="23" fill="#24272e">salah kaprah</text>',
+    '</g>',
+    '<path d="M300 322 C404 386, 530 402, 636 394" fill="none" stroke="#20242b" stroke-width="3" stroke-dasharray="9 12" stroke-linecap="round"/>',
+    '<path d="M982 322 C892 374, 810 394, 712 394" fill="none" stroke="#20242b" stroke-width="3" stroke-dasharray="9 12" stroke-linecap="round"/>',
+    '</g>',
+    '<text x="72" y="794" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#8a92a0">whiteboard visual system · concept → framework → applied approach → boundary</text>',
+    '</svg>',
+    ''
+  ].join('\n');
+}
+
+function visualAssetUrl() {
+  return '/assets/visuals/' + dateStr + '.svg';
+}
+
+function writeKnowledgeCanvas(topic, meta) {
+  mkdirSync(VISUALS, { recursive: true });
+  const svg = renderKnowledgeCanvasSvg(topic, meta);
+  const file = join(VISUALS, dateStr + '.svg');
+  writeFileSync(file, svg, 'utf8');
+  return visualAssetUrl();
+}
+
+function insertKnowledgeCanvas(html, topic, visualUrl) {
+  if (/class=["'][^"']*\bknowledge-canvas\b/i.test(html)) return html;
+  const alt = 'Knowledge canvas: ' + compactText(topic.title || topic.slug || 'Knowledge Brief');
+  const block = [
+    '<figure class="knowledge-canvas">',
+    '<img src="' + escapeHtml(visualUrl) + '" alt="' + escapeHtml(alt) + '" loading="lazy" decoding="async">',
+    '<figcaption>Visual knowledge layer: peta konsep, framework, pendekatan terapan, dan batas pemakaian.</figcaption>',
+    '</figure>'
+  ].join('\n');
+  if (/<p\s+class=["']dek["'][^>]*>[\s\S]*?<\/p>/i.test(html)) {
+    return html.replace(/(<p\s+class=["']dek["'][^>]*>[\s\S]*?<\/p>)/i, '$1\n' + block);
+  }
+  return block + '\n' + html;
+}
+
 function updateLedger(topic, meta){
   if (!existsSync(LEDGER_FILE)) return;
   const ledger = json(LEDGER_FILE, { concepts: [] });
@@ -219,7 +346,7 @@ function updateLedger(topic, meta){
 }
 
 // ---------- templating / inject ----------
-function injectTemplate(html){
+function injectTemplate(html, visualUrl){
   const css = readFileSync(CSS_FILE, 'utf8');
   const styleTag = '<style>\n' + css + '\n</style>';
   const meta = extractMeta(html);
@@ -235,7 +362,9 @@ function injectTemplate(html){
     '<meta property="og:type" content="article">',
     '<meta property="og:title" content="' + title + '">',
     '<meta property="og:description" content="' + description + '">',
-    '<meta property="og:url" content="' + absUrl('/briefs/' + dateStr + '.html') + '">'
+    '<meta property="og:url" content="' + absUrl('/briefs/' + dateStr + '.html') + '">',
+    visualUrl ? '<meta property="og:image" content="' + absUrl(visualUrl) + '">' : '',
+    visualUrl ? '<meta name="twitter:card" content="summary_large_image">' : ''
   ].join('\n');
   html = html.replace(/<style[\s\S]*?<\/style>/gi, '');
   html = html.replace(/<title>[\s\S]*?<\/title>/gi, '');
@@ -408,7 +537,9 @@ async function main(){
   let finalHtml;
   if (DRY){
     console.log('(dry-run) membangun kerangka tanpa DeepSeek.');
-    finalHtml = injectTemplate( addChrome( renderDryHtml(topic) ) );
+    const dryHtml = renderDryHtml(topic);
+    const visualUrl = writeKnowledgeCanvas(topic, extractMeta(dryHtml));
+    finalHtml = injectTemplate(addChrome(insertKnowledgeCanvas(dryHtml, topic, visualUrl)), visualUrl);
   } else {
     if(!DEEPSEEK){ console.error('DEEPSEEK_API_KEY belum diset. Gunakan --dry-run atau set env.'); process.exit(1); }
     const promptText = readFileSync(PROMPT_FILE, 'utf8');
@@ -424,7 +555,8 @@ async function main(){
         : '';
       console.log('calling deepseek... attempt ' + attempt);
       const html = await callDeepSeek(enrichedPrompt + repairNote, topic);
-      const dressed = normalizeAuditLanguage(injectTemplate(addChrome(html)));
+      const visualUrl = writeKnowledgeCanvas(topic, extractMeta(html));
+      const dressed = normalizeAuditLanguage(injectTemplate(addChrome(insertKnowledgeCanvas(html, topic, visualUrl)), visualUrl));
       try {
         auditKnowledgeBrief(dressed, { production: true });
         finalHtml = dressed;
