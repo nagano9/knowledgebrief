@@ -29,7 +29,7 @@ const SITE_URL = 'https://knowledgebrief.id';
 
 const DEEPSEEK = process.env.DEEPSEEK_API_KEY || '';
 const MODEL = process.env.BRIEF_MODEL || 'deepseek-v4-flash';
-const MAX_TOKENS = Number(process.env.BRIEF_MAX_TOKENS || 6200);
+const MAX_TOKENS = Number(process.env.BRIEF_MAX_TOKENS || 12000);
 const DRY = process.argv.includes('--dry-run');
 const WIB_ONLY = process.env.KB_MODE !== 'utc';
 
