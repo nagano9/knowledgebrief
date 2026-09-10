@@ -9,6 +9,15 @@
       "pillar": "Strategy",
       "lens": "Lensa Knowledge Brief - Penerapan",
       "dek": "Edisi pembuka menempatkan strategi sebagai hipotesis yang harus diuji, bukan sebagai slogan yang dipertahankan setelah bukti berubah."
+    },
+    {
+      "uid": "mtuvif8nh9ke",
+      "date": "2026-09-10",
+      "slug": "where-how-to-win",
+      "title": "Di mana bermain & bagaimana menang",
+      "pillar": "Strategy",
+      "lens": "Konsep",
+      "dek": "Kemarin kita menempatkan strategi sebagai hipotesis yang harus diuji; hari ini kita turunkan hipotesis itu menjadi dua pertanyaan yang memaksa penolakan eksplisit: di mana bermain, dan bagaimana menang."
     }
   ],
   "theses": [
@@ -18,5 +27,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-09"
+  "updated": "2026-09-10"
 }
