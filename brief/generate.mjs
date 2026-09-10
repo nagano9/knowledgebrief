@@ -30,8 +30,12 @@ const LEDGER_FILE = join(LEDGER_DIR, 'ledger.json');
 const SITE_URL = 'https://knowledgebrief.id';
 
 const DEEPSEEK = process.env.DEEPSEEK_API_KEY || '';
+const OPENAI = process.env.OPENAI_API_KEY || '';
 const MODEL = process.env.BRIEF_MODEL || 'deepseek-v4-flash';
 const MAX_TOKENS = Number(process.env.BRIEF_MAX_TOKENS || 12000);
+const IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+const IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE || '1536x1024';
+const IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'high';
 const DRY = process.argv.includes('--dry-run');
 const WIB_ONLY = process.env.KB_MODE !== 'utc';
 
@@ -307,16 +311,93 @@ function renderKnowledgeCanvasSvg(topic, meta) {
   ].join('\n');
 }
 
-function visualAssetUrl() {
+function pngVisualAssetUrl() {
+  return '/assets/visuals/' + dateStr + '.png';
+}
+
+function svgVisualAssetUrl() {
   return '/assets/visuals/' + dateStr + '.svg';
 }
 
-function writeKnowledgeCanvas(topic, meta) {
+function knowledgeCanvasPrompt(topic, meta) {
+  const title = compactText(topic.title || topic.slug || 'Knowledge Brief');
+  const model = compactText(topic.model || topic.coreConcept || 'Framework');
+  const core = compactText(topic.coreConcept || topic.title || 'Konsep inti');
+  const pillar = compactText(topic.pillar || 'Decision knowledge');
+  const lens = compactText(meta.lens || meta.dek || 'Lensa hari ini');
+  const dek = compactText(meta.dek || 'Peta konsep, hubungan, dan batas pemakaian.');
+  return [
+    'Create one premium executive whiteboard knowledge visual for KnowledgeBrief.id.',
+    '',
+    'Subject:',
+    'Title: ' + title,
+    'Core concept: ' + core,
+    'Framework or approach: ' + model,
+    'Theory or domain: ' + pillar,
+    'Business trigger / lens: ' + lens,
+    'Applied interpretation: ' + dek,
+    '',
+    'Visual style:',
+    '- pure clean white background, editorial and premium, not decorative',
+    '- hand-drawn marker/whiteboard style, but master-level and precise',
+    '- black marker lines with restrained blue accents for core concept, green accents for framework/application, red accents only for avoid/red flag',
+    '- use conceptual shapes, arrows, causal loops, small matrices, and boundary markers',
+    '- visually explain the relationship: business trigger -> core concept -> framework -> applied approach -> boundary/red flag',
+    '- polished consulting-grade whiteboard, like a senior strategy professor explaining the topic',
+    '',
+    'Composition:',
+    '- landscape 3:2 composition',
+    '- central concept map, not a poster',
+    '- a few short legible labels only; avoid dense paragraphs',
+    '- leave generous whitespace',
+    '- no stock photo, no people, no cartoon mascots, no 3D render, no gradient blob, no neon, no generic AI dashboard',
+    '- avoid fake logos, fake citations, and tiny unreadable text',
+    '',
+    'Output should feel consistent with a serious knowledge ledger for CEOs, CFOs, policy leaders, and senior professionals.'
+  ].join('\n');
+}
+
+async function writeOpenAiKnowledgeCanvas(topic, meta) {
+  if (!OPENAI || DRY) return '';
+  const res = await fetch('https://api.openai.com/v1/images/generations', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + OPENAI
+    },
+    body: JSON.stringify({
+      model: IMAGE_MODEL,
+      prompt: knowledgeCanvasPrompt(topic, meta),
+      size: IMAGE_SIZE,
+      quality: IMAGE_QUALITY,
+      n: 1
+    }),
+    signal: AbortSignal.timeout(300000)
+  });
+  if (!res.ok) {
+    const body = await res.text().catch(function(){ return ''; });
+    throw new Error('OpenAI image HTTP ' + res.status + ': ' + body.slice(0, 300));
+  }
+  const data = await res.json();
+  const b64 = data && data.data && data.data[0] && data.data[0].b64_json;
+  if (!b64) throw new Error('OpenAI image response missing b64_json');
   mkdirSync(VISUALS, { recursive: true });
+  writeFileSync(join(VISUALS, dateStr + '.png'), Buffer.from(b64, 'base64'));
+  return pngVisualAssetUrl();
+}
+
+async function writeKnowledgeCanvas(topic, meta) {
+  mkdirSync(VISUALS, { recursive: true });
+  try {
+    const png = await writeOpenAiKnowledgeCanvas(topic, meta);
+    if (png) return png;
+  } catch (e) {
+    console.error('OpenAI visual generation failed; falling back to SVG: ' + (e && e.message ? e.message : e));
+  }
   const svg = renderKnowledgeCanvasSvg(topic, meta);
   const file = join(VISUALS, dateStr + '.svg');
   writeFileSync(file, svg, 'utf8');
-  return visualAssetUrl();
+  return svgVisualAssetUrl();
 }
 
 function insertKnowledgeCanvas(html, topic, visualUrl) {
@@ -538,7 +619,7 @@ async function main(){
   if (DRY){
     console.log('(dry-run) membangun kerangka tanpa DeepSeek.');
     const dryHtml = renderDryHtml(topic);
-    const visualUrl = writeKnowledgeCanvas(topic, extractMeta(dryHtml));
+    const visualUrl = await writeKnowledgeCanvas(topic, extractMeta(dryHtml));
     finalHtml = injectTemplate(addChrome(insertKnowledgeCanvas(dryHtml, topic, visualUrl)), visualUrl);
   } else {
     if(!DEEPSEEK){ console.error('DEEPSEEK_API_KEY belum diset. Gunakan --dry-run atau set env.'); process.exit(1); }
@@ -555,7 +636,7 @@ async function main(){
         : '';
       console.log('calling deepseek... attempt ' + attempt);
       const html = await callDeepSeek(enrichedPrompt + repairNote, topic);
-      const visualUrl = writeKnowledgeCanvas(topic, extractMeta(html));
+      const visualUrl = await writeKnowledgeCanvas(topic, extractMeta(html));
       const dressed = normalizeAuditLanguage(injectTemplate(addChrome(insertKnowledgeCanvas(html, topic, visualUrl)), visualUrl));
       try {
         auditKnowledgeBrief(dressed, { production: true });
