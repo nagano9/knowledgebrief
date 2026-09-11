@@ -518,7 +518,8 @@ function writeSeoFiles(){
   const latest = dates[0] || dateStr;
   const urls = [
     { loc: absUrl('/'), lastmod: latest },
-    { loc: absUrl('/briefs/'), lastmod: latest }
+    { loc: absUrl('/briefs/'), lastmod: latest },
+    { loc: absUrl('/knowledge-os.html'), lastmod: latest }
   ];
   for (const d of dates) {
     const e = m[d] || {};
@@ -554,6 +555,62 @@ function writeIndex(){
   writeFileSync(join(BRIEFS,'index.html'), html, 'utf8');
 }
 
+function writeKnowledgeOsPage(){
+  const m = json(join(BRIEFS,'manifest.json'), {});
+  const dates = Object.keys(m).sort().reverse();
+  const latestDate = dates[0] || dateStr;
+  const latest = m[latestDate] || {};
+  const latestHref = latest.file ? '/briefs/' + latest.file : '/briefs/';
+  const rows = dates.slice(0, 12).map(function(d){
+    const e = m[d] || {};
+    if (!e.file) return '';
+    const pd = new Date(d+'T00:00:00Z').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Jakarta'});
+    return '<article class="row"><div><span>' + escapeHtml(pd) + '</span><h3><a href="/briefs/' + escapeHtml(e.file) + '">' + escapeHtml(e.headline || e.title || pd) + '</a></h3></div><p>' + escapeHtml(stripHtml(e.dek || '').slice(0, 190)) + '</p></article>';
+  }).join('\n');
+  const topics = json(TOPICS_FILE, { topics: [] }).topics || [];
+  const topicRows = topics.slice(0, 24).map(function(t){
+    return '<tr><td><b>' + escapeHtml(t.title || t.slug) + '</b><span>' + escapeHtml(t.pillar || '') + '</span></td><td>' + escapeHtml(t.model || t.coreConcept || '') + '</td><td>' + escapeHtml((t.tags || []).slice(0, 4).join(', ')) + '</td></tr>';
+  }).join('\n');
+  const html = [
+    '<!doctype html>',
+    '<html lang="id">',
+    '<head>',
+    '<meta charset="utf-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    '<title>Knowledge Operating System | KnowledgeBrief.id</title>',
+    '<meta name="description" content="Knowledge Operating System KnowledgeBrief.id: matriks konsep, toolkit, misuse index, dan learning path untuk profesional eksekutif.">',
+    '<meta name="robots" content="index,follow,max-image-preview:large">',
+    '<link rel="canonical" href="' + absUrl('/knowledge-os.html') + '">',
+    '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
+    '<link rel="manifest" href="/site.webmanifest">',
+    '<meta name="theme-color" content="#1652a0">',
+    '<style>',
+    ':root{--bg:#fff;--fg:#17191d;--muted:#626875;--faint:#8b93a1;--accent:#1652a0;--green:#0e7c66;--risk:#a63a32;--soft:#f6f8fb;--line:#e1e6ef;--line2:#b9c4d4;--serif:Georgia,"Times New Roman",serif;--sans:Inter,system-ui,sans-serif;--mono:ui-monospace,Consolas,monospace}',
+    '*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.7}.wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px}.brand{font-family:var(--serif);font-size:26px;font-weight:700;text-decoration:none;color:var(--fg)}.brand span{color:var(--accent)}header{border-bottom:1px solid var(--line2);padding-bottom:18px;margin-bottom:48px;display:flex;justify-content:space-between;gap:18px;align-items:baseline;flex-wrap:wrap}nav a{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);text-decoration:none;margin-left:18px}nav a:hover{color:var(--accent)}h1{font-family:var(--serif);font-size:52px;line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;max-width:820px}.dek{font-family:var(--serif);font-size:22px;line-height:1.48;color:var(--muted);max-width:780px;margin:0 0 30px}.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 18px;border-radius:6px;font-weight:700}.link{display:inline-block;margin-left:14px;color:var(--accent);font-weight:700;text-decoration:none}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px;margin:42px 0}.cell{border-top:1px solid var(--line2);padding-top:15px}.cell h2{font-size:15px;margin:0 0 8px}.cell p{font-size:14px;color:var(--muted);margin:0}.k{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin:44px 0 12px}table{width:100%;border-collapse:collapse;margin-bottom:34px}th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--line2);padding:10px 8px}td{border-bottom:1px solid var(--line);padding:14px 8px;vertical-align:top;font-size:14px}td span{display:block;color:var(--muted);margin-top:3px}.row{display:grid;grid-template-columns:minmax(230px,.42fr) minmax(0,1fr);gap:24px;border-top:1px solid var(--line);padding:16px 0}.row span{font-family:var(--mono);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}.row h3{font-family:var(--serif);font-size:21px;line-height:1.2;margin:4px 0}.row a{color:var(--fg);text-decoration:none}.row p{color:var(--muted);margin:0}.misuse{border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:18px 0;margin:0 0 34px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.misuse b{display:block;color:var(--risk);margin-bottom:6px}.misuse p{margin:0;color:var(--muted);font-size:14px}.path{border-top:1px solid var(--line2);padding-top:18px}.path ol{margin:0;padding-left:22px}.path li{margin-bottom:9px}@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.misuse{grid-template-columns:1fr}.row{grid-template-columns:1fr}h1{font-size:38px}}@media(max-width:560px){.wrap{padding:24px 18px 64px}nav a{margin:0 14px 0 0}.grid{grid-template-columns:1fr}h1{font-size:32px}.dek{font-size:19px}}',
+    '</style>',
+    '</head>',
+    '<body><div class="wrap">',
+    '<header><a class="brand" href="/">KnowledgeBrief<span>.id</span></a><nav><a href="/briefs/">Arsip</a><a href="/knowledge-os.html">Knowledge OS</a><a href="' + escapeHtml(latestHref) + '">Edisi terbaru</a></nav></header>',
+    '<main>',
+    '<h1>Knowledge Operating System.</h1>',
+    '<p class="dek">KnowledgeBrief.id dibangun sebagai sistem pengetahuan untuk pengambil kebijakan, CEO, CFO, dan chief lainnya. Tujuannya bukan memperbanyak bacaan, tetapi membuat konsep, framework, tokoh, pendekatan, dan batas pemakaian saling terlihat.</p>',
+    '<p><a class="btn" href="' + escapeHtml(latestHref) + '">Baca edisi terbaru</a><a class="link" href="/briefs/">Lihat arsip</a></p>',
+    '<section class="grid"><div class="cell"><h2>Knowledge Matrix</h2><p>Daftar konsep, teori, framework, dan pendekatan yang perlu dipahami lintas fungsi.</p></div><div class="cell"><h2>Concept Graph</h2><p>Hubungan antar konsep agar pembaca melihat sebab, batas, dan konsekuensi.</p></div><div class="cell"><h2>Toolkit Library</h2><p>Konsep diturunkan ke alat kerja: diagnosis, memo, gate, review, dan pertanyaan keputusan.</p></div><div class="cell"><h2>Misuse Index</h2><p>Bagian merah untuk salah kaprah, konsep yang tidak cocok, dan red flag pemakaian.</p></div><div class="cell"><h2>Learning Path</h2><p>Jalur belajar 7 hari, 30 hari, dan 90 hari untuk membangun kapasitas eksekutif.</p></div></section>',
+    '<div class="k">Knowledge matrix awal</div>',
+    '<table><thead><tr><th>Konsep</th><th>Framework atau approach</th><th>Tag</th></tr></thead><tbody>' + topicRows + '</tbody></table>',
+    '<div class="k">Misuse index</div>',
+    '<section class="misuse"><div><b>Salah kaprah</b><p>Memakai istilah strategis sebagai pengganti pilihan yang jelas.</p></div><div><b>Jangan pakai jika</b><p>Konteks keputusan, data, owner, dan horizon belum cukup untuk diuji.</p></div><div><b>Red flag</b><p>Konsep terdengar cerdas tetapi tidak mengubah memo, rapat, gate, atau keputusan.</p></div></section>',
+    '<div class="k">Learning path</div>',
+    '<section class="path"><ol><li><b>7 hari:</b> pahami istilah, batas konsep, dan satu pertanyaan diagnosis.</li><li><b>30 hari:</b> hubungkan konsep dengan rapat, risiko, capital allocation, governance, atau operating model.</li><li><b>90 hari:</b> bangun ledger keputusan agar konsep tidak berhenti sebagai bacaan.</li></ol></section>',
+    '<div class="k">Edisi yang membangun ledger</div>',
+    rows,
+    '</main>',
+    '</div></body></html>',
+    ''
+  ].join('\n');
+  writeFileSync(join(REPO, 'knowledge-os.html'), html, 'utf8');
+}
+
 function writeHomePage(){
   const m = json(join(BRIEFS,'manifest.json'), {});
   const dates = Object.keys(m).sort().reverse();
@@ -586,7 +643,7 @@ function writeHomePage(){
     '</style>',
     '</head>',
     '<body>',
-    '<header><div class="wrap nav"><div class="brand">KnowledgeBrief<span>.id</span></div><nav><a href="/briefs/">Arsip</a><a href="' + escapeHtml(latestHref) + '">Edisi terbaru</a></nav></div></header>',
+    '<header><div class="wrap nav"><div class="brand">KnowledgeBrief<span>.id</span></div><nav><a href="/briefs/">Arsip</a><a href="/knowledge-os.html">Knowledge OS</a><a href="' + escapeHtml(latestHref) + '">Edisi terbaru</a></nav></div></header>',
     '<main class="wrap">',
     '<section class="hero"><div><h1>Tiga konsep setiap pagi, satu tesis yang bisa diuji.</h1><p class="dek">KnowledgeBrief.id bukan ringkasan berita. Ia membangun ledger pengetahuan dari konsep utama, konsep pembanding, dan mekanisme praktik yang bisa dipakai ulang oleh manajer eksekutif dan Subject Matter Expert.</p><a class="btn" href="' + escapeHtml(latestHref) + '">Baca edisi terbaru</a><a class="link" href="/briefs/">Lihat arsip</a></div>',
     '<aside class="latest"><div class="k">Latest brief</div><h2><a href="' + escapeHtml(latestHref) + '">' + escapeHtml(latestHeadline) + '</a></h2><p>' + escapeHtml(latestTitle) + '</p><p>' + escapeHtml(latestDek) + '</p></aside></section>',
@@ -658,6 +715,7 @@ async function main(){
   updateManifest(dateStr, meta, file);
   writeIndex();
   writeHomePage();
+  writeKnowledgeOsPage();
   writeSeoFiles();
   advanceState(state, sel); // sekarang maju; jika topik besok harus incremental, jangan maju terlalu agresif.
   console.log('done -> briefs/' + file + (DRY?' (dry-run)':''));
