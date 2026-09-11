@@ -392,15 +392,13 @@ async function writeKnowledgeCanvas(topic, meta) {
     const png = await writeOpenAiKnowledgeCanvas(topic, meta);
     if (png) return png;
   } catch (e) {
-    console.error('OpenAI visual generation failed; falling back to SVG: ' + (e && e.message ? e.message : e));
+    console.error('OpenAI visual generation failed; publishing without visual: ' + (e && e.message ? e.message : e));
   }
-  const svg = renderKnowledgeCanvasSvg(topic, meta);
-  const file = join(VISUALS, dateStr + '.svg');
-  writeFileSync(file, svg, 'utf8');
-  return svgVisualAssetUrl();
+  return '';
 }
 
 function insertKnowledgeCanvas(html, topic, visualUrl) {
+  if (!visualUrl) return html;
   if (/class=["'][^"']*\bknowledge-canvas\b/i.test(html)) return html;
   const alt = 'Knowledge canvas: ' + compactText(topic.title || topic.slug || 'Knowledge Brief');
   const block = [
