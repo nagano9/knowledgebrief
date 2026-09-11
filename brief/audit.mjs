@@ -21,8 +21,22 @@ export function stripTagsForAudit(html) {
 
 export function auditKnowledgeBrief(html, options = {}) {
   const text = stripTagsForAudit(html);
+  const source = String(html || '').trim();
   const failures = [];
   const production = options.production !== false;
+
+  if (production && !/<\/body>\s*<\/html>\s*$/i.test(source)) {
+    failures.push('incomplete HTML: missing closing body/html');
+  }
+  if (production && (/<\s*$/.test(source) || /<[^>]{0,80}$/.test(source))) {
+    failures.push('incomplete HTML: ends inside an HTML tag');
+  }
+  if (production && (source.match(/<section\b/gi) || []).length !== (source.match(/<\/section>/gi) || []).length) {
+    failures.push('incomplete HTML: unbalanced section tags');
+  }
+  if (production && (source.match(/<div\b/gi) || []).length !== (source.match(/<\/div>/gi) || []).length) {
+    failures.push('incomplete HTML: unbalanced div tags');
+  }
 
   if (!/<meta\s+name=["']teaser["']/i.test(html)) failures.push('missing teaser meta');
   if (!/<p\s+class=["']dek["']>/i.test(html)) failures.push('missing dek');

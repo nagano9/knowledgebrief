@@ -32,7 +32,7 @@ const SITE_URL = 'https://knowledgebrief.id';
 const DEEPSEEK = process.env.DEEPSEEK_API_KEY || '';
 const OPENAI = process.env.OPENAI_API_KEY || '';
 const MODEL = process.env.BRIEF_MODEL || 'deepseek-v4-flash';
-const MAX_TOKENS = Number(process.env.BRIEF_MAX_TOKENS || 12000);
+const MAX_TOKENS = Number(process.env.BRIEF_MAX_TOKENS || 24000);
 const IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
 const IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE || '1536x1024';
 const IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'high';
@@ -186,12 +186,27 @@ async function callDeepSeek(promptText, topic){
   });
   if (!res.ok){ const b=await res.text(); throw new Error('DeepSeek HTTP '+res.status+': '+b.slice(0,300)); }
   const data = await res.json();
-  let html = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '';
+  const choice = data.choices && data.choices[0];
+  if (choice && choice.finish_reason && !['stop', 'end_turn'].includes(choice.finish_reason)) {
+    throw new Error('DeepSeek output incomplete: finish_reason=' + choice.finish_reason + '. Increase BRIEF_MAX_TOKENS or reduce prompt size.');
+  }
+  let html = (choice && choice.message && choice.message.content) || '';
   html = html.replace(/^\s*\x60\x60\x60[a-zA-Z]*\s*\n?/, '').replace(/\n?\x60\x60\x60\s*$/, '').trim();
   return html;
 }
 
 function stripHtml(s){ return String(s).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim(); }
+
+function assertCompleteHtml(html, stage) {
+  const source = String(html || '').trim();
+  const failures = [];
+  if (source.length < 2000) failures.push('too short');
+  if (!/<\/body>\s*<\/html>\s*$/i.test(source)) failures.push('missing closing body/html');
+  if (/<\s*$/.test(source) || /<[^>]{0,80}$/.test(source)) failures.push('ends inside an HTML tag');
+  if ((source.match(/<section\b/gi) || []).length !== (source.match(/<\/section>/gi) || []).length) failures.push('unbalanced section tags');
+  if ((source.match(/<div\b/gi) || []).length !== (source.match(/<\/div>/gi) || []).length) failures.push('unbalanced div tags');
+  if (failures.length) throw new Error(stage + ' incomplete HTML: ' + failures.join(', '));
+}
 
 function extractMeta(html){
   const dekM = html.match(/<p class="dek">([\s\S]*?)<\/p>/);
@@ -693,8 +708,10 @@ async function main(){
         : '';
       console.log('calling deepseek... attempt ' + attempt);
       const html = await callDeepSeek(enrichedPrompt + repairNote, topic);
+      assertCompleteHtml(html, 'raw KnowledgeBrief draft');
       const visualUrl = await writeKnowledgeCanvas(topic, extractMeta(html));
       const dressed = normalizeAuditLanguage(injectTemplate(addChrome(insertKnowledgeCanvas(html, topic, visualUrl)), visualUrl));
+      assertCompleteHtml(dressed, 'rendered KnowledgeBrief draft');
       try {
         auditKnowledgeBrief(dressed, { production: true });
         finalHtml = dressed;

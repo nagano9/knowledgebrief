@@ -79,6 +79,10 @@ test('audit rejects boundary guidance without semantic danger styling', () => {
   assert.throws(() => auditKnowledgeBrief(valid.replace('field danger"><span class="fk">Jangan pakai konsep ini jika', 'field"><span class="fk">Jangan pakai konsep ini jika')), /danger styling/);
 });
 
+test('audit rejects truncated html', () => {
+  assert.throws(() => auditKnowledgeBrief(valid.replace('</body></html>', '<div class="<')), /incomplete HTML/);
+});
+
 test('published editions pass production audit', () => {
   const dir = join(repo, 'briefs');
   const files = readdirSync(dir).filter((name) => /^\d{4}-\d{2}-\d{2}\.html$/.test(name));
