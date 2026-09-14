@@ -32,7 +32,7 @@ const SITE_URL = 'https://knowledgebrief.id';
 const DEEPSEEK = process.env.DEEPSEEK_API_KEY || '';
 const OPENAI = process.env.OPENAI_API_KEY || '';
 const MODEL = process.env.BRIEF_MODEL || 'deepseek-v4-flash';
-const MAX_TOKENS = Number(process.env.BRIEF_MAX_TOKENS || 24000);
+const MAX_TOKENS = Number(process.env.BRIEF_MAX_TOKENS || 48000);
 const IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
 const IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE || '1536x1024';
 const IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'high';
@@ -707,19 +707,19 @@ async function main(){
         ? '\n\n=== HASIL AUDIT DRAFT SEBELUMNYA ===\n' + lastAudit + '\nTulis ulang dari awal. Jangan buka dengan frasa generik, jangan pakai framing list mekanis, dan buka dengan trigger bisnis, angka, keputusan, atau konsep yang spesifik.'
         : '';
       console.log('calling deepseek... attempt ' + attempt);
-      const html = await callDeepSeek(enrichedPrompt + repairNote, topic);
-      assertCompleteHtml(html, 'raw KnowledgeBrief draft');
-      const visualUrl = await writeKnowledgeCanvas(topic, extractMeta(html));
-      const dressed = normalizeAuditLanguage(injectTemplate(addChrome(insertKnowledgeCanvas(html, topic, visualUrl)), visualUrl));
-      assertCompleteHtml(dressed, 'rendered KnowledgeBrief draft');
       try {
+        const html = await callDeepSeek(enrichedPrompt + repairNote, topic);
+        assertCompleteHtml(html, 'raw KnowledgeBrief draft');
+        const visualUrl = await writeKnowledgeCanvas(topic, extractMeta(html));
+        const dressed = normalizeAuditLanguage(injectTemplate(addChrome(insertKnowledgeCanvas(html, topic, visualUrl)), visualUrl));
+        assertCompleteHtml(dressed, 'rendered KnowledgeBrief draft');
         auditKnowledgeBrief(dressed, { production: true });
         finalHtml = dressed;
         break;
       } catch (e) {
-        if (!(e instanceof AuditError) || attempt === 3) throw e;
-        lastAudit = e.message;
-        console.error('audit rejected attempt ' + attempt + ': ' + e.message);
+        if (attempt === 3) throw e;
+        lastAudit = e instanceof Error ? e.message : String(e);
+        console.error('draft rejected attempt ' + attempt + ': ' + lastAudit);
       }
     }
   }
