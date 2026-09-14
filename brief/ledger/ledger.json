@@ -36,6 +36,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Pekan lalu kita menetapkan di mana bermain dan bagaimana menang; edisi ini menguji apakah kemenangan itu punya umur, dan berapa lama."
+    },
+    {
+      "uid": "mu1tqwkix1wi",
+      "date": "2026-09-15",
+      "slug": "agency-incentives",
+      "title": "Principal-Agent & insentif",
+      "pillar": "Organisasi",
+      "lens": "Konsep",
+      "dek": "Kemarin soal moat, keunggulan yang bertahan terhadap pasar; hari ini soal kebocoran dari dalam, ketika pemilik dan pengelola tidak lagi berdiri di sisi yang sama dan angka hasilnya tidak bisa dilekatkan kepada siapa pun."
     }
   ],
   "theses": [
@@ -45,5 +54,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-14"
+  "updated": "2026-09-15"
 }
