@@ -45,6 +45,15 @@
       "pillar": "Organisasi",
       "lens": "Konsep",
       "dek": "Kemarin soal moat, keunggulan yang bertahan terhadap pasar; hari ini soal kebocoran dari dalam, ketika pemilik dan pengelola tidak lagi berdiri di sisi yang sama dan angka hasilnya tidak bisa dilekatkan kepada siapa pun."
+    },
+    {
+      "uid": "mu396530331e",
+      "date": "2026-09-16",
+      "slug": "uncertainty-capex",
+      "title": "Keputusan di bawah ketidakpastian",
+      "pillar": "Decision",
+      "lens": "Penerapan",
+      "dek": "Edisi kemarin membahas insentif yang membengkokkan keputusan; hari ini pertanyaannya bergeser ke keputusan yang harus diambil sebelum datanya ada."
     }
   ],
   "theses": [
@@ -54,5 +63,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-15"
+  "updated": "2026-09-16"
 }
