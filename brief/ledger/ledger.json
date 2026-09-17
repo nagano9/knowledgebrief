@@ -63,6 +63,15 @@
       "pillar": "Knowledge",
       "lens": "Konsep",
       "dek": "Kalibrasi keputusan yang kita bahas 16 September hanya berguna bila jejaknya bisa dibaca oleh orang yang tidak hadir di ruangan; edisi ini menyerang sisi itu, ketika catatan bertambah tetapi biaya belajar-ulang tidak turun."
+    },
+    {
+      "uid": "mu63zze1wqzb",
+      "date": "2026-09-18",
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "lens": "Sintesis",
+      "dek": "Jika edisi kemarin menempatkan organisasi belajar sebagai soal menyimpan dan mengalirkan dokumen, pekan ini memaksa geseran yang lebih keras: yang membedakan bukan apa yang dipelajari organisasi, melainkan siapa di dalamnya yang berwenang menghentikan sesuatu ketika bukti berubah."
     }
   ],
   "theses": [
@@ -72,5 +81,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-17"
+  "updated": "2026-09-18"
 }
