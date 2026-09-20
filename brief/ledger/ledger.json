@@ -72,6 +72,15 @@
       "pillar": "Sintesis",
       "lens": "Sintesis",
       "dek": "Jika edisi kemarin menempatkan organisasi belajar sebagai soal menyimpan dan mengalirkan dokumen, pekan ini memaksa geseran yang lebih keras: yang membedakan bukan apa yang dipelajari organisasi, melainkan siapa di dalamnya yang berwenang menghentikan sesuatu ketika bukti berubah."
+    },
+    {
+      "uid": "muaedty0gfek",
+      "date": "2026-09-21",
+      "slug": "decision-rights",
+      "title": "Decision rights & desain organisasi",
+      "pillar": "Organisasi",
+      "lens": "Konsep",
+      "dek": "Pekan lalu ditutup dengan sintesis tentang tesis mana yang berdiri dan mana yang gugur; hari ini kita masuk ke titik yang menentukan apakah tesis itu pernah dieksekusi atau hanya berputar di ruang rapat, yaitu siapa yang benar-benar memutus dan siapa yang hanya dimintai pendapat."
     }
   ],
   "theses": [
@@ -81,5 +90,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-18"
+  "updated": "2026-09-21"
 }
