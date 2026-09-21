@@ -81,6 +81,15 @@
       "pillar": "Organisasi",
       "lens": "Konsep",
       "dek": "Pekan lalu ditutup dengan sintesis tentang tesis mana yang berdiri dan mana yang gugur; hari ini kita masuk ke titik yang menentukan apakah tesis itu pernah dieksekusi atau hanya berputar di ruang rapat, yaitu siapa yang benar-benar memutus dan siapa yang hanya dimintai pendapat."
+    },
+    {
+      "uid": "mubtuluk4x1z",
+      "date": "2026-09-22",
+      "slug": "judgment-debias",
+      "title": "Penilaian & debias",
+      "pillar": "Decision",
+      "lens": "Konsep",
+      "dek": "Edisi kemarin memasang decision rights sebagai tiang desain organisasi; hari ini kita masuk ke isi keputusan itu sendiri, karena hak keputusan yang rapi tetap bisa menghasilkan pilihan keliru saat bias konfirmasi dan jejak sunk cost dibiarkan bekerja tanpa pengukuran."
     }
   ],
   "theses": [
@@ -90,5 +99,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-21"
+  "updated": "2026-09-22"
 }
