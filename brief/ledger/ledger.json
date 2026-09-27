@@ -90,6 +90,15 @@
       "pillar": "Decision",
       "lens": "Konsep",
       "dek": "Edisi kemarin memasang decision rights sebagai tiang desain organisasi; hari ini kita masuk ke isi keputusan itu sendiri, karena hak keputusan yang rapi tetap bisa menghasilkan pilihan keliru saat bias konfirmasi dan jejak sunk cost dibiarkan bekerja tanpa pengukuran."
+    },
+    {
+      "uid": "mukejdvci0mf",
+      "date": "2026-09-28",
+      "slug": "capital-cost",
+      "title": "Biaya modal & hurdle rate",
+      "pillar": "Finance",
+      "lens": "Konsep",
+      "dek": "Edisi 22 September membahas bias di dalam proses penilaian; hari ini kita turun satu lapis ke masukannya, yaitu tingkat diskonto yang menentukan lebih dulu proyek mana yang bahkan tidak pernah sampai ke meja penilaian."
     }
   ],
   "theses": [
@@ -99,5 +108,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-22"
+  "updated": "2026-09-28"
 }
