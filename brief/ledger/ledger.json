@@ -99,6 +99,15 @@
       "pillar": "Finance",
       "lens": "Konsep",
       "dek": "Edisi 22 September membahas bias di dalam proses penilaian; hari ini kita turun satu lapis ke masukannya, yaitu tingkat diskonto yang menentukan lebih dulu proyek mana yang bahkan tidak pernah sampai ke meja penilaian."
+    },
+    {
+      "uid": "muklbnqhhevp",
+      "date": "2026-09-25",
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "lens": "Sintesis",
+      "dek": "Edisi sintesis ini menarik benang dari decision rights, penilaian yang bebas bias, dan biaya modal, lalu menguji ulang seluruh rangkaian itu terhadap sinyal yang pekan ini justru datang dari daya listrik dan kepastian offtake."
     }
   ],
   "theses": [
@@ -108,5 +117,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-28"
+  "updated": "2026-09-25"
 }
