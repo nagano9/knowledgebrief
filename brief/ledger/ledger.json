@@ -108,6 +108,15 @@
       "pillar": "Sintesis",
       "lens": "Sintesis",
       "dek": "Edisi sintesis ini menarik benang dari decision rights, penilaian yang bebas bias, dan biaya modal, lalu menguji ulang seluruh rangkaian itu terhadap sinyal yang pekan ini justru datang dari daya listrik dan kepastian offtake."
+    },
+    {
+      "uid": "multxh7oeenl",
+      "date": "2026-09-29",
+      "slug": "expertise-calibration",
+      "title": "Keahlian & kalibrasi",
+      "pillar": "Knowledge",
+      "lens": "Penerapan",
+      "dek": "Dua edisi lalu kita membongkar cara menekan bias dalam penilaian; hari ini kita pindahkan pertanyaannya ke tempat yang lebih sulit, yaitu apakah keyakinan seorang ahli benar-benar bergerak seiring akurasinya."
     }
   ],
   "theses": [
@@ -117,5 +126,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-25"
+  "updated": "2026-09-29"
 }
