@@ -117,6 +117,15 @@
       "pillar": "Knowledge",
       "lens": "Penerapan",
       "dek": "Dua edisi lalu kita membongkar cara menekan bias dalam penilaian; hari ini kita pindahkan pertanyaannya ke tempat yang lebih sulit, yaitu apakah keyakinan seorang ahli benar-benar bergerak seiring akurasinya."
+    },
+    {
+      "uid": "mun9fv36tzku",
+      "date": "2026-09-30",
+      "slug": "tacit-knowledge",
+      "title": "Pengetahuan tacit vs eksplisit",
+      "pillar": "Knowledge",
+      "lens": "Konsep",
+      "dek": "Kemarin kalibrasi keahlian dibahas sebagai hasil umpan balik yang berulang; hari ini kita periksa residu dari proses itu, yaitu penilaian yang tidak pernah masuk dokumen mana pun dan karena itu tidak muncul di laporan apa pun ketika orangnya berhenti."
     }
   ],
   "theses": [
@@ -126,5 +135,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-29"
+  "updated": "2026-09-30"
 }
