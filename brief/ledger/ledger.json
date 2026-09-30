@@ -126,6 +126,15 @@
       "pillar": "Knowledge",
       "lens": "Konsep",
       "dek": "Kemarin kalibrasi keahlian dibahas sebagai hasil umpan balik yang berulang; hari ini kita periksa residu dari proses itu, yaitu penilaian yang tidak pernah masuk dokumen mana pun dan karena itu tidak muncul di laporan apa pun ketika orangnya berhenti."
+    },
+    {
+      "uid": "muoox16ut3ui",
+      "date": "2026-10-01",
+      "slug": "bias-sunk-cost",
+      "title": "Bias & sunken-cost",
+      "pillar": "Decision",
+      "lens": "Konsep",
+      "dek": "Edisi 28 September menetapkan hurdle rate sebagai ambang komitmen baru. Hari ini kita periksa apa yang terjadi ketika ambang itu tidak diuji ulang, dan siapa yang sebenarnya dilindungi ketika proyek yang gagal diputuskan untuk diteruskan."
     }
   ],
   "theses": [
@@ -135,5 +144,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-09-30"
+  "updated": "2026-10-01"
 }
