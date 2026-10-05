@@ -144,6 +144,15 @@
       "pillar": "Sintesis",
       "lens": "Sintesis",
       "dek": "Pekan lalu merangkum sintesis pertama. Pekan ini keempat topik yang tersebar sejak Senin (biaya modal, kalibrasi, tacit versus eksplisit, dan bias sunken cost) diuji apakah benar saling mengunci, atau hanya bertumpuk sebagai tema tanpa satu lapisan keputusan."
+    },
+    {
+      "uid": "muujxl1senag",
+      "date": "2026-10-05",
+      "slug": "mengapa-moat",
+      "title": "Moat & keunggulan yang bertahan",
+      "pillar": "Strategy",
+      "lens": "Konsep",
+      "dek": "Setelah edisi 1 dan 30 September membahas biaya masa lalu yang sudah tidak relevan serta pengetahuan yang tak bisa dituliskan, hari ini kita naik satu lantai: apakah keunggulan yang kita nikmati berasal dari struktur yang menahan pesaing, atau hanya dari siklus yang suatu hari berbalik."
     }
   ],
   "theses": [
@@ -153,5 +162,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-02"
+  "updated": "2026-10-05"
 }
