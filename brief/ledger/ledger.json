@@ -153,6 +153,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Setelah edisi 1 dan 30 September membahas biaya masa lalu yang sudah tidak relevan serta pengetahuan yang tak bisa dituliskan, hari ini kita naik satu lantai: apakah keunggulan yang kita nikmati berasal dari struktur yang menahan pesaing, atau hanya dari siklus yang suatu hari berbalik."
+    },
+    {
+      "uid": "muw27b3pqtcw",
+      "date": "2026-10-06",
+      "slug": "agency-incentives",
+      "title": "Principal-Agent & insentif",
+      "pillar": "Organisasi",
+      "lens": "Konsep",
+      "dek": "Edisi kemarin menimbang moat sebagai keunggulan yang bertahan; hari ini turun satu lapis ke mesin yang membuat keunggulan itu bocor dari dalam, yaitu pembayaran atas output yang tidak bisa diatribusikan kepada orang yang menerimanya."
     }
   ],
   "theses": [
@@ -162,5 +171,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-05"
+  "updated": "2026-10-06"
 }
