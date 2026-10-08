@@ -171,6 +171,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Kemarin insentif menjelaskan mengapa agen bertindak menyimpang dari prinsipal; hari ini insentif yang sama menjelaskan mengapa strategi berhenti sebagai hipotesis dan mengeras menjadi komitmen yang mahal untuk dibatalkan."
+    },
+    {
+      "uid": "muywjk2cvohs",
+      "date": "2026-10-08",
+      "slug": "where-how-to-win",
+      "title": "Di mana bermain & bagaimana menang",
+      "pillar": "Strategy",
+      "lens": "Aturan",
+      "dek": "Kemarin strategi diposisikan sebagai hipotesis yang harus diuji; hari ini hipotesis itu diberi tempat pengujian, karena hipotesis tanpa arena dan tanpa opsi yang ditolak tidak bisa difalsifikasi oleh siapa pun."
     }
   ],
   "theses": [
@@ -180,5 +189,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-07"
+  "updated": "2026-10-08"
 }
