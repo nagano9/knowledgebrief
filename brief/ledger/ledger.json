@@ -180,6 +180,15 @@
       "pillar": "Strategy",
       "lens": "Aturan",
       "dek": "Kemarin strategi diposisikan sebagai hipotesis yang harus diuji; hari ini hipotesis itu diberi tempat pengujian, karena hipotesis tanpa arena dan tanpa opsi yang ditolak tidak bisa difalsifikasi oleh siapa pun."
+    },
+    {
+      "uid": "mv0cjb90xic2",
+      "date": "2026-10-09",
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "lens": "Sintesis",
+      "dek": "Edisi kemarin menutup pekan dengan menetapkan di mana bermain dan bagaimana menang; edisi ini menarik benang dari moat, strategi sebagai hipotesis, dan insentif principal-agent untuk menguji apakah keempat tesis pekan ini masih berdiri ketika biaya mengakui kekeliruan diperlakukan sebagai variabel utama, bukan sebagai catatan kaki."
     }
   ],
   "theses": [
@@ -189,5 +198,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-08"
+  "updated": "2026-10-09"
 }
