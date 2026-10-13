@@ -198,6 +198,15 @@
       "pillar": "Organisasi",
       "lens": "Penerapan",
       "dek": "Sintesis pekan lalu berhenti pada urutan pencairan dan pemilik risiko; hari ini kita turun satu lapis ke mekanisme yang menentukan keduanya, yaitu garis pemisah antara yang memutus dan yang hanya menasihati."
+    },
+    {
+      "uid": "mv63regfnvuu",
+      "date": "2026-10-13",
+      "slug": "judgment-debias",
+      "title": "Penilaian & debias",
+      "pillar": "Decision",
+      "lens": "Penerapan",
+      "dek": "Kemarin kita menata siapa yang memegang hak keputusan; hari ini kita uji apakah orang yang memegangnya benar-benar terkalibrasi, karena hak keputusan yang rapi hanya memindahkan bias ke ruangan yang lebih kecil, bukan menghapusnya."
     }
   ],
   "theses": [
@@ -207,5 +216,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-12"
+  "updated": "2026-10-13"
 }
