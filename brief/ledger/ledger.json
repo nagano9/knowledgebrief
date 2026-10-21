@@ -243,6 +243,15 @@
       "pillar": "Knowledge",
       "lens": "Konsep",
       "dek": "Setelah kemarin kita menaruh hurdle rate dan biaya modal di atas meja, hari ini kita pertanyakan input yang paling jarang diaudit dalam perhitungan itu: keyakinan orang yang menyusun angkanya."
+    },
+    {
+      "uid": "mvhe9ixowdnc",
+      "date": "2026-10-21",
+      "slug": "tacit-knowledge",
+      "title": "Pengetahuan tacit vs eksplisit",
+      "pillar": "Knowledge",
+      "lens": "Konsep",
+      "dek": "Kemarin kalibrasi dibahas sebagai kapasitas menilai milik individu; hari ini pertanyaannya naik satu lantai, yaitu apakah penilaian itu masih berada di dalam perusahaan ketika orangnya sudah tidak di sana."
     }
   ],
   "theses": [
@@ -252,5 +261,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-20"
+  "updated": "2026-10-21"
 }
