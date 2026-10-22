@@ -252,6 +252,15 @@
       "pillar": "Knowledge",
       "lens": "Konsep",
       "dek": "Kemarin kalibrasi dibahas sebagai kapasitas menilai milik individu; hari ini pertanyaannya naik satu lantai, yaitu apakah penilaian itu masih berada di dalam perusahaan ketika orangnya sudah tidak di sana."
+    },
+    {
+      "uid": "mvitrj0gc5nw",
+      "date": "2026-10-22",
+      "slug": "org-learning",
+      "title": "Organisasi belajar vs sekadar menumpuk dokumen",
+      "pillar": "Knowledge",
+      "lens": "Konsep",
+      "dek": "Kemarin kita memisahkan pengetahuan tacit dari eksplisit. Hari ini pertanyaannya lebih keras: apakah dokumen yang kita simpan benar-benar memangkas waktu orang berikutnya untuk sampai pada keputusan yang sama?"
     }
   ],
   "theses": [
@@ -261,5 +270,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-21"
+  "updated": "2026-10-22"
 }
