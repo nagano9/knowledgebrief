@@ -261,6 +261,15 @@
       "pillar": "Knowledge",
       "lens": "Konsep",
       "dek": "Kemarin kita memisahkan pengetahuan tacit dari eksplisit. Hari ini pertanyaannya lebih keras: apakah dokumen yang kita simpan benar-benar memangkas waktu orang berikutnya untuk sampai pada keputusan yang sama?"
+    },
+    {
+      "uid": "mvk9awo0wamo",
+      "date": "2026-10-23",
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "lens": "Sintesis",
+      "dek": "Kemarin soal menyimpan pengetahuan; hari ini soal menagihnya, karena sepanjang pekan rantai yang sama berulang: informasi tersedia, harga atas ketidaktahuannya tidak pernah ditulis."
     }
   ],
   "theses": [
@@ -270,5 +279,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-22"
+  "updated": "2026-10-23"
 }
