@@ -270,6 +270,15 @@
       "pillar": "Sintesis",
       "lens": "Sintesis",
       "dek": "Kemarin soal menyimpan pengetahuan; hari ini soal menagihnya, karena sepanjang pekan rantai yang sama berulang: informasi tersedia, harga atas ketidaktahuannya tidak pernah ditulis."
+    },
+    {
+      "uid": "mvoj0q97tmld",
+      "date": "2026-10-26",
+      "slug": "mengapa-moat",
+      "title": "Moat & keunggulan yang bertahan",
+      "pillar": "Strategy",
+      "lens": "Konsep",
+      "dek": "Pekan lalu ditutup dengan sintesis dan dibuka dengan hurdle rate sebagai penentu harga waktu; hari ini kita lihat sisi yang sering dilupakan, yaitu apakah arus kas yang didiskon itu masih ada sepuluh tahun dari sekarang."
     }
   ],
   "theses": [
@@ -279,5 +288,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-23"
+  "updated": "2026-10-26"
 }
