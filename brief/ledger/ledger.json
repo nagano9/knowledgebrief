@@ -279,6 +279,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Pekan lalu ditutup dengan sintesis dan dibuka dengan hurdle rate sebagai penentu harga waktu; hari ini kita lihat sisi yang sering dilupakan, yaitu apakah arus kas yang didiskon itu masih ada sepuluh tahun dari sekarang."
+    },
+    {
+      "uid": "mvq0kj8s1ayl",
+      "date": "2026-10-27",
+      "slug": "agency-incentives",
+      "title": "Principal-Agent & insentif",
+      "pillar": "Organisasi",
+      "lens": "Konsep",
+      "dek": "Edisi kemarin menutup rangkaian dengan moat, keunggulan yang bertahan di luar perusahaan; hari ini kita masuk ke mesin di dalamnya, yakni apakah orang yang menjalankan perusahaan punya alasan dan cara untuk menjaganya."
     }
   ],
   "theses": [
@@ -288,5 +297,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-26"
+  "updated": "2026-10-27"
 }
