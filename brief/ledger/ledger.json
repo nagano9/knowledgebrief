@@ -297,6 +297,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Kemarin soal siapa yang menanggung risiko keputusan; hari ini soal bagaimana keputusan itu sendiri diperlakukan sebagai dugaan yang bisa salah, dan siapa yang berwenang menyatakannya salah."
+    },
+    {
+      "uid": "mvsw6w51ukwt",
+      "date": "2026-10-29",
+      "slug": "bias-sunk-cost",
+      "title": "Bias & sunken-cost",
+      "pillar": "Decision",
+      "lens": "Konsep",
+      "dek": "Kemarin kita memperlakukan strategi sebagai hipotesis yang harus diuji; hari ini kita menghadapi momen paling sulit dari hipotesis yang gagal, yaitu ketika biaya yang sudah keluar dan reputasi pengambil keputusan bersekutu untuk menunda penghentian."
     }
   ],
   "theses": [
@@ -306,5 +315,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-28"
+  "updated": "2026-10-29"
 }
