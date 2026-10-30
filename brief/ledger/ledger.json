@@ -306,6 +306,15 @@
       "pillar": "Decision",
       "lens": "Konsep",
       "dek": "Kemarin kita memperlakukan strategi sebagai hipotesis yang harus diuji; hari ini kita menghadapi momen paling sulit dari hipotesis yang gagal, yaitu ketika biaya yang sudah keluar dan reputasi pengambil keputusan bersekutu untuk menunda penghentian."
+    },
+    {
+      "uid": "mvuc13sf7iva",
+      "date": "2026-10-30",
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "lens": "Sintesis",
+      "dek": "Kemarin bias dan sunk cost menjelaskan mengapa tesis yang sudah busuk tetap hidup di kepala pemiliknya. Sintesis pekan ini menunjukkan siapa yang akhirnya menagih bukti, dan hampir selalu penagihnya datang dari luar rapat anggaran."
     }
   ],
   "theses": [
@@ -315,5 +324,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-29"
+  "updated": "2026-10-30"
 }
