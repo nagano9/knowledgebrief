@@ -315,6 +315,15 @@
       "pillar": "Sintesis",
       "lens": "Sintesis",
       "dek": "Kemarin bias dan sunk cost menjelaskan mengapa tesis yang sudah busuk tetap hidup di kepala pemiliknya. Sintesis pekan ini menunjukkan siapa yang akhirnya menagih bukti, dan hampir selalu penagihnya datang dari luar rapat anggaran."
+    },
+    {
+      "uid": "mvyljl9jh9u7",
+      "date": "2026-11-02",
+      "slug": "decision-rights",
+      "title": "Decision rights & desain organisasi",
+      "pillar": "Organisasi",
+      "lens": "Konsep",
+      "dek": "Edisi 29 Oktober berhenti pada bias yang membuat proyek buruk tetap dipertahankan; edisi ini mundur satu langkah ke sumbernya, yakni hak keputusan yang tidak pernah dinamai sehingga tidak ada orang yang berwenang menghentikannya."
     }
   ],
   "theses": [
@@ -324,5 +333,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-10-30"
+  "updated": "2026-11-02"
 }
