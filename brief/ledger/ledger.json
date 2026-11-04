@@ -333,6 +333,15 @@
       "pillar": "Decision",
       "lens": "Konsep",
       "dek": "Edisi 2 November menentukan siapa yang berhak memutuskan; edisi ini menguji bagaimana bahan penilaian sampai ke meja orang yang berhak itu tanpa dimampatkan oleh konsensus yang terbentuk terlalu dini."
+    },
+    {
+      "uid": "mw1iamddrjrk",
+      "date": "2026-11-04",
+      "slug": "uncertainty-capex",
+      "title": "Keputusan di bawah ketidakpastian",
+      "pillar": "Decision",
+      "lens": "Penerapan",
+      "dek": "Kemarin kita memisahkan penilaian dari debias; hari ini pemisahan itu dibawa ke meja approval capex, tempat angka NPV biasanya jauh lebih rapi daripada kenyataan yang mendasarinya."
     }
   ],
   "theses": [
@@ -342,5 +351,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-03"
+  "updated": "2026-11-04"
 }
