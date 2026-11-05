@@ -342,6 +342,15 @@
       "pillar": "Decision",
       "lens": "Penerapan",
       "dek": "Kemarin kita memisahkan penilaian dari debias; hari ini pemisahan itu dibawa ke meja approval capex, tempat angka NPV biasanya jauh lebih rapi daripada kenyataan yang mendasarinya."
+    },
+    {
+      "uid": "mw2xwrvqx5q5",
+      "date": "2026-11-05",
+      "slug": "where-how-to-win",
+      "title": "Di mana bermain & bagaimana menang",
+      "pillar": "Strategy",
+      "lens": "Konsep",
+      "dek": "Kemarin kita memilih cara memutuskan ketika informasi belum lengkap; hari ini kita menagih keputusan yang sudah diambil, yaitu apa yang berhenti dikerjakan ketika sebuah pilihan dinyatakan menang."
     }
   ],
   "theses": [
@@ -351,5 +360,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-04"
+  "updated": "2026-11-05"
 }
