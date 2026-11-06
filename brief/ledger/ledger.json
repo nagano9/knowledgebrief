@@ -351,6 +351,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Kemarin kita memilih cara memutuskan ketika informasi belum lengkap; hari ini kita menagih keputusan yang sudah diambil, yaitu apa yang berhenti dikerjakan ketika sebuah pilihan dinyatakan menang."
+    },
+    {
+      "uid": "mw4dgw37innq",
+      "date": "2026-11-06",
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "lens": "Sintesis",
+      "dek": "Sepekan terakhir kita memasang urutan yang rapi, dari hak keputusan pada 2 November sampai pilihan strategi pada 5 November. Sintesis hari ini menagih janji urutan itu pada tiga kasus yang masih terbuka minggu ini, dan menemukan satu mata rantai yang belum pernah diuji."
     }
   ],
   "theses": [
@@ -360,5 +369,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-05"
+  "updated": "2026-11-06"
 }
