@@ -369,6 +369,15 @@
       "pillar": "Finance",
       "lens": "Konsep",
       "dek": "Edisi 3 November membedah bias di dalam proyeksi dan penilaian; edisi ini turun satu lapis ke angka yang membuat penilaian itu bekerja, yaitu biaya modal yang dipakai sebagai penyaring, dan menunjukkan bahwa penyaring yang salah sama merusaknya dengan proyeksi yang salah."
+    },
+    {
+      "uid": "mwa6ia275lgq",
+      "date": "2026-11-10",
+      "slug": "expertise-calibration",
+      "title": "Keahlian & kalibrasi",
+      "pillar": "Knowledge",
+      "lens": "Konsep",
+      "dek": "Edisi 3 November berhenti pada bias penilai dan cara mendebias; hari ini kita maju satu langkah dengan mengukur apakah keyakinan ahli cocok dengan hasilnya, lalu menaruh ukuran itu ke dalam hak keputusan."
     }
   ],
   "theses": [
@@ -378,5 +387,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-09"
+  "updated": "2026-11-10"
 }
