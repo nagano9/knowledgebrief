@@ -378,6 +378,15 @@
       "pillar": "Knowledge",
       "lens": "Konsep",
       "dek": "Edisi 3 November berhenti pada bias penilai dan cara mendebias; hari ini kita maju satu langkah dengan mengukur apakah keyakinan ahli cocok dengan hasilnya, lalu menaruh ukuran itu ke dalam hak keputusan."
+    },
+    {
+      "uid": "mwbhb90i9u20",
+      "date": "2026-11-11",
+      "slug": "tacit-knowledge",
+      "title": "Pengetahuan tacit vs eksplisit",
+      "pillar": "Knowledge",
+      "lens": "Konsep",
+      "dek": "Edisi 10 November membahas keahlian dan kalibrasi; hari ini kita turun satu lapis ke tempat keahlian itu bersemayam, yakni pengetahuan tacit yang tidak sepenuhnya bisa dieksplisitkan."
     }
   ],
   "theses": [
@@ -387,5 +396,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-10"
+  "updated": "2026-11-11"
 }
