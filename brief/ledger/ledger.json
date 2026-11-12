@@ -387,6 +387,15 @@
       "pillar": "Knowledge",
       "lens": "Konsep",
       "dek": "Edisi 10 November membahas keahlian dan kalibrasi; hari ini kita turun satu lapis ke tempat keahlian itu bersemayam, yakni pengetahuan tacit yang tidak sepenuhnya bisa dieksplisitkan."
+    },
+    {
+      "uid": "mwcz82j9k262",
+      "date": "2026-11-12",
+      "slug": "org-learning",
+      "title": "Organisasi belajar vs sekadar menumpuk dokumen",
+      "pillar": "Knowledge",
+      "lens": "Penerapan",
+      "dek": "Kemarin kita memisahkan pengetahuan tacit dari eksplisit; hari ini kita berhenti menghitung dokumen dan mulai menghitung berapa kali organisasi membayar ulang pelajaran yang sebenarnya sudah pernah ia miliki."
     }
   ],
   "theses": [
@@ -396,5 +405,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-11"
+  "updated": "2026-11-12"
 }
