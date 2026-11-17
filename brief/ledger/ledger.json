@@ -414,6 +414,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Setelah pekan lalu menimbang biaya modal dan kalibrasi keahlian, edisi ini menanyakan bagian mana dari margin perusahaan yang benar-benar dimiliki, dan bagian mana yang hanya dipinjamkan pasar untuk sementara."
+    },
+    {
+      "uid": "mwk7iwswhekb",
+      "date": "2026-11-17",
+      "slug": "agency-incentives",
+      "title": "Principal-Agent & insentif",
+      "pillar": "Organisasi",
+      "lens": "Penerapan",
+      "dek": "Kemarin moat dibahas sebagai keunggulan struktural yang bertahan; hari ini turun satu lapis ke orang yang diberi kuasa menjaganya, dan mengapa insentif saham bisa menjadi kebocoran alih-alih penjaga."
     }
   ],
   "theses": [
@@ -423,5 +432,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-16"
+  "updated": "2026-11-17"
 }
