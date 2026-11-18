@@ -423,6 +423,15 @@
       "pillar": "Organisasi",
       "lens": "Penerapan",
       "dek": "Kemarin moat dibahas sebagai keunggulan struktural yang bertahan; hari ini turun satu lapis ke orang yang diberi kuasa menjaganya, dan mengapa insentif saham bisa menjadi kebocoran alih-alih penjaga."
+    },
+    {
+      "uid": "mwll063hgb34",
+      "date": "2026-11-18",
+      "slug": "strategy-hypothesis",
+      "title": "Strategi sebagai hipotesis",
+      "pillar": "Strategy",
+      "lens": "Konsep",
+      "dek": "Kemarin kita merapikan celah agensi lewat insentif; hari ini kita periksa premis yang membuat insentif itu masuk akal, sebab menyelaraskan orang pada hipotesis yang salah hanya membuat kesalahan berjalan lebih rapi dan lebih cepat."
     }
   ],
   "theses": [
@@ -432,5 +441,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-17"
+  "updated": "2026-11-18"
 }
