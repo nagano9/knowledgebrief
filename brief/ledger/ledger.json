@@ -432,6 +432,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Kemarin kita merapikan celah agensi lewat insentif; hari ini kita periksa premis yang membuat insentif itu masuk akal, sebab menyelaraskan orang pada hipotesis yang salah hanya membuat kesalahan berjalan lebih rapi dan lebih cepat."
+    },
+    {
+      "uid": "mwn0fcl8ikbr",
+      "date": "2026-11-19",
+      "slug": "bias-sunk-cost",
+      "title": "Bias & sunken-cost",
+      "pillar": "Decision",
+      "lens": "Konsep",
+      "dek": "Kemarin kita menempatkan strategi sebagai hipotesis yang harus bisa gugur; hari ini kita bahas mode kegagalan yang paling sering membuat hipotesis itu tidak pernah diuji sampai mati, yaitu kelanjutan proyek yang dipertahankan demi muka pengambil keputusan awalnya."
     }
   ],
   "theses": [
@@ -441,5 +450,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-18"
+  "updated": "2026-11-19"
 }
