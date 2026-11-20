@@ -441,6 +441,15 @@
       "pillar": "Decision",
       "lens": "Konsep",
       "dek": "Kemarin kita menempatkan strategi sebagai hipotesis yang harus bisa gugur; hari ini kita bahas mode kegagalan yang paling sering membuat hipotesis itu tidak pernah diuji sampai mati, yaitu kelanjutan proyek yang dipertahankan demi muka pengambil keputusan awalnya."
+    },
+    {
+      "uid": "mwofln3kk2u0",
+      "date": "2026-11-20",
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "lens": "Sintesis",
+      "dek": "Empat edisi pekan ini membahas moat, principal-agent, strategi sebagai hipotesis, dan bias sunk-cost; sintesis ini menutupnya dengan satu pertanyaan yang belum dijawab semuanya, yaitu keunggulan mana yang benar-benar milik perusahaan dan mana yang hanya dipinjam dari kebijakan."
     }
   ],
   "theses": [
@@ -450,5 +459,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-19"
+  "updated": "2026-11-20"
 }
