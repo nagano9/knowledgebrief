@@ -459,6 +459,15 @@
       "pillar": "Organisasi",
       "lens": "Konsep",
       "dek": "Edisi 19 November berhenti pada bias yang membuat kita bertahan terlalu lama pada keputusan yang sudah berjalan; hari ini kita mundur satu langkah ke titik sebelumnya, yaitu siapa yang sejak awal berhak menutup keputusan itu."
+    },
+    {
+      "uid": "mwub1rzgeqaq",
+      "date": "2026-11-24",
+      "slug": "judgment-debias",
+      "title": "Penilaian & debias",
+      "pillar": "Decision",
+      "lens": "Konsep",
+      "dek": "Edisi 19 November menjelaskan mengapa sunken cost menahan keputusan; hari ini unit analisisnya dipindahkan dari kepala individu ke format komite, karena di situlah bias mendapat perlindungan kolektif."
     }
   ],
   "theses": [
@@ -468,5 +477,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-23"
+  "updated": "2026-11-24"
 }
