@@ -468,6 +468,15 @@
       "pillar": "Decision",
       "lens": "Konsep",
       "dek": "Edisi 19 November menjelaskan mengapa sunken cost menahan keputusan; hari ini unit analisisnya dipindahkan dari kepala individu ke format komite, karena di situlah bias mendapat perlindungan kolektif."
+    },
+    {
+      "uid": "mwvnn42trfvr",
+      "date": "2026-11-25",
+      "slug": "uncertainty-capex",
+      "title": "Keputusan di bawah ketidakpastian",
+      "pillar": "Decision",
+      "lens": "Konsep",
+      "dek": "Edisi kemarin menajamkan penilaian dan debias pada level individu; hari ini kita bawa persoalan itu ke meja approval capex, tempat bias paling mahal dan paling murah untuk diperbaiki sekaligus."
     }
   ],
   "theses": [
@@ -477,5 +486,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-24"
+  "updated": "2026-11-25"
 }
