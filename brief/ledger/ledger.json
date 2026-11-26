@@ -477,6 +477,15 @@
       "pillar": "Decision",
       "lens": "Konsep",
       "dek": "Edisi kemarin menajamkan penilaian dan debias pada level individu; hari ini kita bawa persoalan itu ke meja approval capex, tempat bias paling mahal dan paling murah untuk diperbaiki sekaligus."
+    },
+    {
+      "uid": "mwx1kwqmc9ik",
+      "date": "2026-11-26",
+      "slug": "where-how-to-win",
+      "title": "Di mana bermain & bagaimana menang",
+      "pillar": "Strategy",
+      "lens": "Konsep",
+      "dek": "Kemarin kita membahas cara memutuskan ketika ketidakpastian tinggi; hari ini kita masuk ke isi keputusannya, sebab pilihan arena yang tidak menolak apa pun bukan keputusan, melainkan anggaran yang dibagi rata dengan nama yang lebih sopan."
     }
   ],
   "theses": [
@@ -486,5 +495,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-25"
+  "updated": "2026-11-26"
 }
