@@ -486,6 +486,15 @@
       "pillar": "Strategy",
       "lens": "Konsep",
       "dek": "Kemarin kita membahas cara memutuskan ketika ketidakpastian tinggi; hari ini kita masuk ke isi keputusannya, sebab pilihan arena yang tidak menolak apa pun bukan keputusan, melainkan anggaran yang dibagi rata dengan nama yang lebih sopan."
+    },
+    {
+      "uid": "mwyhd4bnqc9q",
+      "date": "2026-11-27",
+      "slug": "sintesis-pekanan",
+      "title": "Sintesis pekanan & rekapitulasi tesis",
+      "pillar": "Sintesis",
+      "lens": "Sintesis",
+      "dek": "Pekan ini bergerak dari hak memutuskan (23 November), ke kualitas penilaian (24 November), ke keputusan di bawah ketidakpastian (25 November), lalu ke pilihan strategis (26 November). Sintesis ini menilai mana yang berdiri, mana yang harus diturunkan statusnya, dan celah yang belum dijawab siapa pun."
     }
   ],
   "theses": [
@@ -495,5 +504,5 @@
       "thesis": "Strategi sebaiknya diperlakukan sebagai hipotesis operasional yang punya sinyal pembukti dan sinyal pembatal."
     }
   ],
-  "updated": "2026-11-26"
+  "updated": "2026-11-27"
 }
